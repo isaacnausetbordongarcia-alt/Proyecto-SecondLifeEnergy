@@ -1,14 +1,14 @@
 import { Sequelize } from "sequelize";
-import { config } from "./env.js";
+import { env } from "./env.js";
 
 export const sequelize = new Sequelize(
-  config.db.name,
-  config.db.user,
-  config.db.password,
+  env.DB_NAME,
+  env.DB_USERNAME,
+  env.DB_PASSWORD,
   {
-    host: config.db.host,
-    port: config.db.port,
+    host: env.DB_HOST,
+    port: env.DB_PORT,
     dialect: "mysql",
-    logging: config.db.logging ? console.log : false,
+    logging: false,
   }
 );
