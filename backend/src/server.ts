@@ -10,7 +10,7 @@ import "./modules/bicycle-details/bicycle-detail.model.js"
 import "./modules/customer/customer.model.js"
 import "./modules/order/order.model.js"
 import "./modules/order-item/order-item.model.js"
-import "./modules/models/model.model.js"
+import "./modules/Module4/model.model.js"
 
 async function startServer() {
   try {

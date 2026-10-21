@@ -4,7 +4,7 @@ import { BicycleDetail } from "../modules/bicycle-details/bicycle-detail.model.j
 import { Customer } from "../modules/customer/customer.model.js";
 import { Order } from "../modules/order/order.model.js";
 import { OrderItem } from "../modules/order-item/order-item.model.js";
-import { Model } from "../modules/models/model.model.js";
+import { Model } from "../modules/Module4/model.model.js";
 
 
 export function defineAssociations() {

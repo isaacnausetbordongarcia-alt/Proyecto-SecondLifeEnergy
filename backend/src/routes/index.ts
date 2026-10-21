@@ -5,7 +5,7 @@ import bicycleDetailRoutes from "../modules/bicycle-details/bicycle-detail.route
 import customerRoutes from "../modules/customer/customer.routes";
 import orderRoutes from "../modules/order/order.routes";
 import orderItemRoutes from "../modules/order-item/order-item.routes";
-import modelRoutes from "../modules/models/model.routes"
+import modelRoutes from "../modules/Module4/model.routes"
 
 const router = Router();
 
