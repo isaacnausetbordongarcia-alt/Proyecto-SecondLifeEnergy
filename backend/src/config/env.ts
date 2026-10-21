@@ -22,7 +22,7 @@ function required(name: string): string {
   return value;
 }
 
-export const config = {
+export const env = {
   env: nodeEnv,
   port: Number(process.env.PORT) || 3000,
   db: {
