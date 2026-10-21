@@ -1,13 +1,36 @@
 import dotenv from "dotenv";
+import path from "path";
 
-dotenv.config();
+const envFiles: Record<string, string> = {
+  development: ".env.develop",
+  test: ".env.testing",
+  production: ".env.production",
+};
 
-export const env = {
-  PORT: Number(process.env.PORT) || 3000,
+const nodeEnv = process.env.NODE_ENV || "development";
+const envFile = envFiles[nodeEnv];
 
-  DB_HOST: process.env.DB_HOST || "localhost",
-  DB_PORT: Number(process.env.DB_PORT) || 3306,
-  DB_NAME: process.env.DB_NAME || "dsw_products",
-  DB_USER: process.env.DB_USER || "root",
-  DB_PASSWORD: process.env.DB_PASSWORD || "",
+if (!envFile) {
+  throw new Error(`NODE_ENV no válido: ${nodeEnv}`);
+}
+
+dotenv.config({ path: path.resolve(process.cwd(), envFile) });
+
+function required(name: string): string {
+  const value = process.env[name];
+  if (!value) throw new Error(`Falta la variable de entorno ${name}`);
+  return value;
+}
+
+export const config = {
+  env: nodeEnv,
+  port: Number(process.env.PORT) || 3000,
+  db: {
+    host: required("DB_HOST"),
+    port: Number(process.env.DB_PORT) || 3306,
+    name: required("DB_NAME"),
+    user: required("DB_USER"),
+    password: required("DB_PASSWORD"),
+    logging: process.env.DB_LOGGING === "true",
+  },
 };
