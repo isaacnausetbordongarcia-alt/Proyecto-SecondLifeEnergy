@@ -1,0 +1,43 @@
+import {
+    Model,
+    DataTypes,
+    InferAttributes,
+    InferCreationAttributes,
+    CreationOptional,
+} from "sequelize";
+
+import { sequelize } from "../../config/database.js";
+
+export class UserRole extends Model<
+    InferAttributes<UserRole>,
+    InferCreationAttributes<UserRole>
+> {
+    declare userId: number;
+
+    declare roleId: number;
+
+    declare assignedAt: CreationOptional<Date>;
+}
+
+UserRole.init(
+    {
+        userId: {
+            type: DataTypes.INTEGER.UNSIGNED,
+            allowNull: false
+        },
+
+        roleId: {
+            type: DataTypes.INTEGER.UNSIGNED,
+            allowNull: false
+        },
+
+        assignedAt: DataTypes.DATE,
+    },
+    {
+        sequelize,
+
+        tableName: "user_roles",
+
+        timestamps: false,
+    }
+);
