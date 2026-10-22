@@ -3,6 +3,15 @@ import { sequelize } from "./config/database.js";
 import { env } from "./config/env.js";
 import { defineAssociations } from "./models/associations.js";
 
+
+import "./modules/users/user.model.js";
+import "./modules/roles/role.model.js";
+import "./modules/permissions/permission.model.js";
+import "./modules/requests/request.model.js";
+import "./modules/tags/tag.model.js";
+import "./modules/forum-categories/forum-category.model.js";
+
+
 async function startServer() {
   try {
 
@@ -12,15 +21,15 @@ async function startServer() {
 
     console.log("Connection to MySQL stablished.");
 
-    await sequelize.sync({force: true}).then (() => {
+    await sequelize.sync({ force: true }).then(() => {
       console.log(" Data synchronized");
     });
 
     console.log("Models synchronized.");
 
-    app.listen(env.PORT, () => {
+    app.listen(env.port, () => {
       console.log(
-        `Server working on http://localhost:${env.PORT}`
+        `Server working on http://localhost:${env.port}`
       );
     });
 
