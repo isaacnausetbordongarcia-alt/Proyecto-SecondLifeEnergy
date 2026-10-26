@@ -1,16 +1,16 @@
 import { Router } from "express";
-import { UserRoleController } from "../userRole/userRole.controller.js";
+import { UserRoleController } from "./userRole.controller.js";
 
 const router = Router();
 
 router.get("/", UserRoleController.getAll);
 
-router.get("/:id", UserRoleController.getById);
+router.get("/:userId/:roleId", UserRoleController.getById);
 
 router.post("/", UserRoleController.create);
 
-router.put("/:id", UserRoleController.update);
+router.put("/:userId/:roleId", UserRoleController.update);
 
-router.delete("/:id", UserRoleController.delete);
+router.delete("/:userId/:roleId", UserRoleController.delete);
 
 export default router;

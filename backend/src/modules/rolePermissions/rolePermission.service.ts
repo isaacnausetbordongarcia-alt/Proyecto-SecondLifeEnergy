@@ -2,20 +2,19 @@ import { RolePermission } from "./rolePermission.model.js";
 
 export class RolePermissionService {
 
-    static async findAll() {
+    static async findAll(filters: { roleId?: number; permissionId?: number } = {}) {
         return RolePermission.findAll({
-            attributes: { exclude: ["passwordHash"] },
-            order: [["id", "ASC"]],
+            where: {
+                ...(filters.roleId !== undefined && { roleId: filters.roleId }),
+                ...(filters.permissionId !== undefined && { permissionId: filters.permissionId }),
+            },
+            order: [["roleId", "ASC"], ["permissionId", "ASC"]],
         });
     }
 
-
-    static async findById(id: number) {
-        return RolePermission.findByPk(id, {
-            attributes: { exclude: ["passwordHash"] },
-        });
+    static async findByIds(roleId: number, permissionId: number) {
+        return RolePermission.findOne({ where: { roleId, permissionId } });
     }
-
 
     static async create(data: {
         roleId: number;
@@ -23,18 +22,6 @@ export class RolePermissionService {
     }) {
         return RolePermission.create(data);
     }
-
-
-    static async update(
-        rolePermission: RolePermission,
-        data: {
-            roleId: number;
-        permissionId: number;
-        }
-    ) {
-        return rolePermission.update(data);
-    }
-
 
     static async delete(rolePermission: RolePermission) {
         await rolePermission.destroy();

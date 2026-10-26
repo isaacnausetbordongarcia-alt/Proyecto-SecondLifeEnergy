@@ -1,5 +1,16 @@
 import { Request, Response, NextFunction } from "express";
-import { UserRoleService } from "../userRole/userRole.service.js";
+import { UserRoleService } from "./userRole.service.js";
+
+function parseKey(req: Request) {
+    const userId = Number(req.params.userId);
+    const roleId = Number(req.params.roleId);
+
+    if (!Number.isInteger(userId) || !Number.isInteger(roleId)) {
+        return null;
+    }
+
+    return { userId, roleId };
+}
 
 export class UserRoleController {
 
@@ -9,7 +20,10 @@ export class UserRoleController {
         next: NextFunction
     ) {
         try {
-            const userRoles = await UserRoleService.findAll();
+            const userId = req.query.userId ? Number(req.query.userId) : undefined;
+            const roleId = req.query.roleId ? Number(req.query.roleId) : undefined;
+
+            const userRoles = await UserRoleService.findAll({ userId, roleId });
 
             res.json(userRoles);
         } catch (error) {
@@ -24,9 +38,14 @@ export class UserRoleController {
         next: NextFunction
     ) {
         try {
-            const id = Number(req.params.id);
+            const key = parseKey(req);
 
-            const userRole = await UserRoleService.findById(id);
+            if (!key) {
+                res.status(400).json({ message: "userId and roleId must be integers" });
+                return;
+            }
+
+            const userRole = await UserRoleService.findByIds(key.userId, key.roleId);
 
             if (!userRole) {
                 res.status(404).json({
@@ -60,9 +79,20 @@ export class UserRoleController {
                 return;
             }
 
+            const existing = await UserRoleService.findByIds(userId, roleId);
+
+            if (existing) {
+                res.status(409).json({
+                    message: "The user already has this role",
+                });
+
+                return;
+            }
+
             const userRole = await UserRoleService.create({
                 userId,
-                roleId
+                roleId,
+                assignedAt,
             });
 
             res.status(201).json(userRole);
@@ -79,9 +109,24 @@ export class UserRoleController {
         next: NextFunction
     ) {
         try {
-            const id = Number(req.params.id);
+            const key = parseKey(req);
 
-            const userRole = await UserRoleService.findById(id);
+            if (!key) {
+                res.status(400).json({ message: "userId and roleId must be integers" });
+                return;
+            }
+
+            const { assignedAt } = req.body;
+
+            if (!assignedAt) {
+                res.status(400).json({
+                    message: "assignedAt is required (userId and roleId cannot be modified)",
+                });
+
+                return;
+            }
+
+            const userRole = await UserRoleService.findByIds(key.userId, key.roleId);
 
             if (!userRole) {
                 res.status(404).json({
@@ -93,7 +138,7 @@ export class UserRoleController {
 
             const updatedUserRole = await UserRoleService.update(
                 userRole,
-                req.body
+                { assignedAt }
             );
 
             res.json(updatedUserRole);
@@ -110,9 +155,14 @@ export class UserRoleController {
         next: NextFunction
     ) {
         try {
-            const id = Number(req.params.id);
+            const key = parseKey(req);
 
-            const userRole = await UserRoleService.findById(id);
+            if (!key) {
+                res.status(400).json({ message: "userId and roleId must be integers" });
+                return;
+            }
+
+            const userRole = await UserRoleService.findByIds(key.userId, key.roleId);
 
             if (!userRole) {
                 res.status(404).json({

@@ -23,15 +23,21 @@ UserRole.init(
     {
         userId: {
             type: DataTypes.INTEGER.UNSIGNED,
-            allowNull: false
+            allowNull: false,
+            primaryKey: true,
         },
 
         roleId: {
             type: DataTypes.INTEGER.UNSIGNED,
-            allowNull: false
+            allowNull: false,
+            primaryKey: true,
         },
 
-        assignedAt: DataTypes.DATE,
+        assignedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
     },
     {
         sequelize,

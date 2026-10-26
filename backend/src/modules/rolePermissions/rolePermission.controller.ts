@@ -1,5 +1,16 @@
 import { Request, Response, NextFunction } from "express";
-import { RolePermission } from "./rolePermission.model.js";
+import { RolePermissionService } from "./rolePermission.service.js";
+
+function parseKey(req: Request) {
+    const roleId = Number(req.params.roleId);
+    const permissionId = Number(req.params.permissionId);
+
+    if (!Number.isInteger(roleId) || !Number.isInteger(permissionId)) {
+        return null;
+    }
+
+    return { roleId, permissionId };
+}
 
 export class RolePermissionController {
 
@@ -9,7 +20,10 @@ export class RolePermissionController {
         next: NextFunction
     ) {
         try {
-            const rolePermissions = await RolePermission.findAll();
+            const roleId = req.query.roleId ? Number(req.query.roleId) : undefined;
+            const permissionId = req.query.permissionId ? Number(req.query.permissionId) : undefined;
+
+            const rolePermissions = await RolePermissionService.findAll({ roleId, permissionId });
 
             res.json(rolePermissions);
         } catch (error) {
@@ -24,16 +38,18 @@ export class RolePermissionController {
         next: NextFunction
     ) {
         try {
-            const id = Number(req.params.id);
+            const key = parseKey(req);
 
-            const rolePermission = await RolePermission.findById(id) as unknown as {
-                roleId: number;
-                permissionId: number;
-            } | undefined;
+            if (!key) {
+                res.status(400).json({ message: "roleId and permissionId must be integers" });
+                return;
+            }
 
-            if (rolePermission === undefined) {
+            const rolePermission = await RolePermissionService.findByIds(key.roleId, key.permissionId);
+
+            if (!rolePermission) {
                 res.status(404).json({
-                    message: "rolepermission not found",
+                    message: "RolePermission not found",
                 });
 
                 return;
@@ -57,51 +73,28 @@ export class RolePermissionController {
 
             if (!roleId || !permissionId) {
                 res.status(400).json({
-                    message: "RoleId y permissionId son obligatorios",
+                    message: "roleId y permissionId son obligatorios",
                 });
 
                 return;
             }
 
-            const rolePermission = await RolePermission.create({
+            const existing = await RolePermissionService.findByIds(roleId, permissionId);
+
+            if (existing) {
+                res.status(409).json({
+                    message: "El rol ya tiene este permiso",
+                });
+
+                return;
+            }
+
+            const rolePermission = await RolePermissionService.create({
                 roleId,
                 permissionId,
             });
 
             res.status(201).json(rolePermission);
-
-        } catch (error) {
-            next(error);
-        }
-    }
-
-
-    static async update(
-        req: Request,
-        res: Response,
-        next: NextFunction
-    ) {
-        try {
-            const id = Number(req.params.id);
-
-            const rolePermission = await RolePermission.findById(id);
-
-            if (rolePermission === undefined) {
-                res.status(404).json({
-                    message: "RolePermission not found",
-                });
-
-                return;
-            }
-
-            await RolePermission.update(
-                rolePermission,
-                req.body
-            );
-
-            const updatedRolePermission = await RolePermission.findById(id);
-
-            res.json(updatedRolePermission);
 
         } catch (error) {
             next(error);
@@ -115,14 +108,16 @@ export class RolePermissionController {
         next: NextFunction
     ) {
         try {
-            const id = Number(req.params.id);
+            const key = parseKey(req);
 
-            const rolePermission = await RolePermission.findById(id) as unknown as {
-                roleId: number;
-                permissionId: number;
-            } | undefined;
+            if (!key) {
+                res.status(400).json({ message: "roleId and permissionId must be integers" });
+                return;
+            }
 
-            if (rolePermission === undefined) {
+            const rolePermission = await RolePermissionService.findByIds(key.roleId, key.permissionId);
+
+            if (!rolePermission) {
                 res.status(404).json({
                     message: "RolePermission not found",
                 });
@@ -130,12 +125,7 @@ export class RolePermissionController {
                 return;
             }
 
-            await RolePermission.destroy({
-                where: {
-                    roleId: rolePermission.roleId,
-                    permissionId: rolePermission.permissionId,
-                },
-            });
+            await RolePermissionService.delete(rolePermission);
 
             res.status(204).send();
 
