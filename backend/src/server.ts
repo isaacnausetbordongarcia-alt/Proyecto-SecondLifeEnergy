@@ -10,7 +10,12 @@ import "./modules/permissions/permission.model.js";
 import "./modules/requests/request.model.js";
 import "./modules/tags/tag.model.js";
 import "./modules/forum-categories/forum-category.model.js";
-
+import "./modules/userRole/userRole.model.js";
+import "./modules/rolePermissions/rolePermission.model.js";
+import "./modules/invitations/invitation.model.js";
+import "./modules/kitComponents/kitComponent.model.js";
+import "./modules/articleImages/articleImage.model.js";
+import "./modules/stockMovements/stockMovement.model.js";
 
 async function startServer() {
   try {
