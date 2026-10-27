@@ -20,7 +20,7 @@ export class SimulationArticlesController {
     }
 
 
-    static async getOne(
+    static async FindById(
         req: Request,
         res: Response,
         next: NextFunction
@@ -29,7 +29,7 @@ export class SimulationArticlesController {
             const simulationId = Number(req.params.simulationId);
             const articleId = Number(req.params.articleId);
 
-            const simulationArticle = await SimulationArticlesService.findOne(
+            const simulationArticle = await SimulationArticlesService.FindById(
                 simulationId,
                 articleId
             );
@@ -86,7 +86,7 @@ export class SimulationArticlesController {
                 return;
             }
 
-            const existing = await SimulationArticlesService.findOne(
+            const existing = await SimulationArticlesService.FindById(
                 simulationId,
                 articleId
             );
@@ -121,7 +121,7 @@ export class SimulationArticlesController {
             const simulationId = Number(req.params.simulationId);
             const articleId = Number(req.params.articleId);
 
-            const simulationArticle = await SimulationArticlesService.findOne(
+            const simulationArticle = await SimulationArticlesService.FindById(
                 simulationId,
                 articleId
             );

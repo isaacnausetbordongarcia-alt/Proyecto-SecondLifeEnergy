@@ -12,7 +12,7 @@ export class SimulationArticlesService {
     }
 
 
-    static async findOne(simulationId: number, articleId: number) {
+    static async FindById(simulationId: number, articleId: number) {
         return SimulationArticles.findOne({
             where: { simulationId, articleId },
         });
