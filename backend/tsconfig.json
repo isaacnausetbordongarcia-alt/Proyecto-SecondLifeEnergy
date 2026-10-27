@@ -13,7 +13,7 @@
   },
   "include": [
     "src/**/*.ts"
-  ],
+, "src/modules/kit-components"  ],
   "exclude": [
     "node_modules",
     "dist"
