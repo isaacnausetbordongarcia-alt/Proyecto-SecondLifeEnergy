@@ -1,11 +1,11 @@
 
-import { ArticleCategory } from "../modules/articleCategories/articleCategory.model.js";
-import { ArticleReview } from "../modules/articleReviews/articleReview.model.js";
+import { ArticleCategory } from "../modules/article-categories/article-category.model.js";
+import { ArticleReview } from "../modules/article-reviews/article-review.model.js";
 import { Moderation } from "../modules/moderations/moderation.model.js";
 import { Question } from "../modules/questions/question.model.js";
 import { Answer } from "../modules/answers/answer.model.js";
-import { SimulationResource } from "../modules/simulationResources/simulationResource.model.js";
-import { ForumCategory } from "../modules/forumCategories/forumCategory.model.js";
+import { SimulationResource } from "../modules/simulation-resources/simulation-resource.model.js";
+import { ForumCategory } from "../modules/forum-categories/forum-category.model.js";
 import { Resource } from "../modules/resources/resource.model.js";
 import { Simulation } from "../modules/simulations/simulation.model.js";
 import { User } from "../modules/users/user.model.js";
@@ -14,9 +14,9 @@ import { Permission } from "../modules/permissions/permission.model.js";
 import { UserRole } from "../modules/userRole/userRole.model.js";
 import { RolePermission } from "../modules/rolePermissions/rolePermission.model.js";
 import { Invitation } from "../modules/invitations/invitation.model.js";
-import { KitComponent } from "../modules/kitComponents/kitComponent.model.js";
-import { ArticleImage } from "../modules/articleImages/articleImage.model.js";
-import { StockMovement } from "../modules/stockMovements/stockMovement.model.js";
+import { KitComponent } from "../modules/kit-components/kitComponent.model.js";
+import { ArticleImage } from "../modules/article-images/articleImage.model.js";
+import { StockMovement } from "../modules/stock-movements/stockMovement.model.js";
 
 export function defineAssociations() {
     // ---------- (UserRole) ----------

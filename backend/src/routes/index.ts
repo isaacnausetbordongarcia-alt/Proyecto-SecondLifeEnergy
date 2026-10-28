@@ -8,9 +8,9 @@ import forumCategoryRoutes from "../modules/forum-categories/forum-category.rout
 import userRoleRoutes from "../modules/userRole/userRole.routes.js";
 import rolePermissionRoutes from "../modules/rolePermissions/rolePermission.routes.js";
 import invitationRoutes from "../modules/invitations/invitation.routes.js";
-import kitComponentRoutes from "../modules/kitComponents/kitComponent.routes.js";
-import articleImageRoutes from "../modules/articleImages/articleImage.routes.js";
-import stockMovementRoutes from "../modules/stockMovements/stockMovement.routes.js";
+import kitComponentRoutes from "../modules/kit-components/kitComponent.routes.js";
+import articleImageRoutes from "../modules/article-images/articleImage.routes.js";
+import stockMovementRoutes from "../modules/stock-movements/stockMovement.routes.js";
 
 const router = Router();
 
