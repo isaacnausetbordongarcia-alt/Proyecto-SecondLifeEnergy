@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { ArticleService } from "./Article.service.js";
+import { ArticleService } from "./article.service.js";
 
 export class ArticleController {
 

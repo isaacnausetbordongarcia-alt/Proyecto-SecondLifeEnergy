@@ -1,5 +1,5 @@
-import { ArticleResource } from "./ArticleResource.model.js";
-import { Resource } from "../Resource/Resource.model.js";
+import { ArticleResource } from "./article-resource.model.js";
+import { Resource } from "../resource/resource.model.js";
 
 export class ArticleResourceService {
     static async getResourcesByArticle(articleId: number): Promise<Resource[]> {

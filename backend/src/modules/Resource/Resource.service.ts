@@ -1,5 +1,5 @@
 import { Op, WhereOptions, CreationAttributes } from "sequelize";
-import { Resource } from "./Resource.model.js";
+import { Resource } from "./resource.model.js";
 
 export interface ResourceFilters {
     authorId?: number;

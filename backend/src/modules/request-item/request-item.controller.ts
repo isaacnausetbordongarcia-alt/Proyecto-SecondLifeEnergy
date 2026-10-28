@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import { RequestItemService } from "./RequestItem.service.js";
+import { RequestItemService } from "./request-item.service.js";
 import { RequestService } from "../requests/request.service.js";
-import { ArticleService } from "../Article/Article.service.js";
+import { ArticleService } from "../article/article.service.js";
 
 export class RequestItemController {
 

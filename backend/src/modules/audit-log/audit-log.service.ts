@@ -1,5 +1,5 @@
 import { Op, WhereOptions } from "sequelize";
-import { AuditLog } from "./AuditLog.model.js";
+import { AuditLog } from "./audit-log.model.js";
 
 export interface AuditLogFilters {
     userId?: number;

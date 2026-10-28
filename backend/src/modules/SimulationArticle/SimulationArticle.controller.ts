@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { SimulationArticlesService } from "./SimulationArticle.service.js";
 import { SimulationService } from "../Simulation/Simulation.service.js";
-import { ArticleService } from "../Article/Article.service.js";
+import { ArticleService } from "../article/article.service.js";
 
 export class SimulationArticlesController {
 

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { AuditLogService } from "./AuditLog.service.js";
+import { AuditLogService } from "./audit-log.service.js";
 
 function handleError(res: Response, error: unknown) {
     console.error(error);

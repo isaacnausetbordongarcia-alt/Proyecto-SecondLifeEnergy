@@ -1,4 +1,4 @@
-import { Article } from "./Article.model.js";
+import { Article } from "./article.model.js";
 
 export class ArticleService {
 
