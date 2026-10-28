@@ -1,3 +1,14 @@
+import { User } from "../modules/users/user.model.js";
+import { Article } from "../modules/article/article.model.js";
+import { Simulation } from "../modules/Simulation/Simulation.model.js";
+import { SimulationArticles } from "../modules/SimulationArticle/SimulationArticles.model.js";
+import { RequestItem } from "../modules/request-item/request-item.model.js";
+import { Request } from "../modules/requests/request.model.js";
+import { Resource } from "../modules/resource/resource.model.js";
+import { ArticleResource } from "../modules/article-resource/article-resource.model.js";
+import { Tag } from "../modules/tags/tag.model.js";
+import { ResourceTag } from "../modules/resource-tag/resource-tag.model.js";
+import { AuditLog } from "../modules/audit-log/audit-log.model.js";
 
 import { ArticleCategory } from "../modules/article-categories/article-category.model.js";
 import { ArticleReview } from "../modules/article-reviews/article-review.model.js";
@@ -6,9 +17,6 @@ import { Question } from "../modules/questions/question.model.js";
 import { Answer } from "../modules/answers/answer.model.js";
 import { SimulationResource } from "../modules/simulation-resources/simulation-resource.model.js";
 import { ForumCategory } from "../modules/forum-categories/forum-category.model.js";
-import { Resource } from "../modules/resources/resource.model.js";
-import { Simulation } from "../modules/simulations/simulation.model.js";
-import { User } from "../modules/users/user.model.js";
 import { Role } from "../modules/roles/role.model.js";
 import { Permission } from "../modules/permissions/permission.model.js";
 import { UserRole } from "../modules/userRole/userRole.model.js";
@@ -19,7 +27,7 @@ import { ArticleImage } from "../modules/article-images/articleImage.model.js";
 import { StockMovement } from "../modules/stock-movements/stockMovement.model.js";
 
 export function defineAssociations() {
-    // ---------- (UserRole) ----------
+    // UserRole
     User.hasMany(UserRole, { foreignKey: "userId", as: "userRoles", onDelete: "CASCADE" });
     UserRole.belongsTo(User, { foreignKey: "userId", as: "user" });
     Role.hasMany(UserRole, { foreignKey: "roleId", as: "userRoles", onDelete: "CASCADE" });
@@ -27,7 +35,7 @@ export function defineAssociations() {
     User.belongsToMany(Role, { through: UserRole, foreignKey: "userId", otherKey: "roleId", as: "roles" });
     Role.belongsToMany(User, { through: UserRole, foreignKey: "roleId", otherKey: "userId", as: "users" });
 
-    // ---------- (RolePermission) ----------
+    // RolePermission
     Role.hasMany(RolePermission, { foreignKey: "roleId", as: "rolePermissions", onDelete: "CASCADE" });
     RolePermission.belongsTo(Role, { foreignKey: "roleId", as: "role" });
     Permission.hasMany(RolePermission, { foreignKey: "permissionId", as: "rolePermissions", onDelete: "CASCADE" });
@@ -35,13 +43,13 @@ export function defineAssociations() {
     Role.belongsToMany(Permission, { through: RolePermission, foreignKey: "roleId", otherKey: "permissionId", as: "permissions" });
     Permission.belongsToMany(Role, { through: RolePermission, foreignKey: "permissionId", otherKey: "roleId", as: "roles" });
 
-    // ---------- (Invitation) ----------
+    // Invitation
     User.hasMany(Invitation, { foreignKey: "invitedById", as: "sentInvitations" });
     Invitation.belongsTo(User, { foreignKey: "invitedById", as: "invitedBy" });
     Role.hasMany(Invitation, { foreignKey: "roleId", as: "invitations" });
     Invitation.belongsTo(Role, { foreignKey: "roleId", as: "role" });
 
-    // ---------- (KitComponent) ----------
+    // KitComponent
     Article.hasMany(KitComponent, { foreignKey: "kitId", as: "kitComponents", onDelete: "CASCADE" });
     KitComponent.belongsTo(Article, { foreignKey: "kitId", as: "kit" });
     Article.hasMany(KitComponent, { foreignKey: "componentId", as: "usedInKits", onDelete: "CASCADE" });
@@ -49,178 +57,187 @@ export function defineAssociations() {
     Article.belongsToMany(Article, { through: KitComponent, foreignKey: "kitId", otherKey: "componentId", as: "components" });
     Article.belongsToMany(Article, { through: KitComponent, foreignKey: "componentId", otherKey: "kitId", as: "kits" });
 
-    // ---------- (ArticleImage) ----------
+    // ArticleImage
     Article.hasMany(ArticleImage, { foreignKey: "articleId", as: "images", onDelete: "CASCADE" });
     ArticleImage.belongsTo(Article, { foreignKey: "articleId", as: "article" });
 
+    // ArticleCategory
+    ArticleCategory.hasMany(Article, { foreignKey: "categoryId", as: "articles" });
+    Article.belongsTo(ArticleCategory, { foreignKey: "categoryId", as: "category" });
+    ArticleCategory.hasMany(ArticleCategory, { foreignKey: "parentCategoryId", as: "subcategories" });
+    ArticleCategory.belongsTo(ArticleCategory, { foreignKey: "parentCategoryId", as: "parentCategory" });
 
-    // ---------- (ArticleCategory) ----------
-ArticleCategory.hasMany(Article, {
-    foreignKey: "categoryId",
-    as: "articles"
-});
+    // ArticleReview
+    Article.hasMany(ArticleReview, { foreignKey: "articleId", as: "reviews" });
+    ArticleReview.belongsTo(Article, { foreignKey: "articleId", as: "article" });
+    User.hasMany(ArticleReview, { foreignKey: "reviewerId", as: "articleReviews" });
+    ArticleReview.belongsTo(User, { foreignKey: "reviewerId", as: "reviewer" });
 
-Article.belongsTo(ArticleCategory, {
-    foreignKey: "categoryId",
-    as: "category"
-});
+    // Question
+    ForumCategory.hasMany(Question, { foreignKey: "categoryId", as: "questions" });
+    Question.belongsTo(ForumCategory, { foreignKey: "categoryId", as: "category" });
+    User.hasMany(Question, { foreignKey: "authorId", as: "questions" });
+    Question.belongsTo(User, { foreignKey: "authorId", as: "author" });
 
-ArticleCategory.hasMany(ArticleCategory, {
-    foreignKey: "parentCategoryId",
-    as: "subcategories"
-});
+    // Answer
+    Question.hasMany(Answer, { foreignKey: "questionId", as: "answers" });
+    Answer.belongsTo(Question, { foreignKey: "questionId", as: "question" });
+    User.hasMany(Answer, { foreignKey: "authorId", as: "answers" });
+    Answer.belongsTo(User, { foreignKey: "authorId", as: "author" });
+    Question.belongsTo(Answer, { foreignKey: "acceptedAnswerId", as: "acceptedAnswer" });
+    Answer.hasMany(Question, { foreignKey: "acceptedAnswerId", as: "acceptedForQuestions" });
 
-ArticleCategory.belongsTo(ArticleCategory, {
-    foreignKey: "parentCategoryId",
-    as: "parentCategory"
-});
+    // Moderation
+    User.hasMany(Moderation, { foreignKey: "moderatorId", as: "moderations" });
+    Moderation.belongsTo(User, { foreignKey: "moderatorId", as: "moderator" });
+    Question.hasMany(Moderation, { foreignKey: "questionId", as: "moderations" });
+    Moderation.belongsTo(Question, { foreignKey: "questionId", as: "question" });
+    Answer.hasMany(Moderation, { foreignKey: "answerId", as: "moderations" });
+    Moderation.belongsTo(Answer, { foreignKey: "answerId", as: "answer" });
 
+    // SimulationResource
+    Simulation.belongsToMany(Resource, {
+        through: SimulationResource,
+        foreignKey: "simulationId",
+        otherKey: "resourceId",
+        as: "resources"
+    });
 
-// ---------- (ArticleReview) ----------
-Article.hasMany(ArticleReview, {
-    foreignKey: "articleId",
-    as: "reviews"
-});
+    Resource.belongsToMany(Simulation, {
+        through: SimulationResource,
+        foreignKey: "resourceId",
+        otherKey: "simulationId",
+        as: "simulations"
+    });
 
-ArticleReview.belongsTo(Article, {
-    foreignKey: "articleId",
-    as: "article"
-});
+    Simulation.hasMany(SimulationResource, {
+        foreignKey: "simulationId",
+        as: "simulationResources"
+    });
 
-User.hasMany(ArticleReview, {
-    foreignKey: "reviewerId",
-    as: "articleReviews"
-});
+    SimulationResource.belongsTo(Simulation, {
+        foreignKey: "simulationId",
+        as: "simulation"
+    });
 
-ArticleReview.belongsTo(User, {
-    foreignKey: "reviewerId",
-    as: "reviewer"
-});
+    Resource.hasMany(SimulationResource, {
+        foreignKey: "resourceId",
+        as: "simulationResources"
+    });
 
+    SimulationResource.belongsTo(Resource, {
+        foreignKey: "resourceId",
+        as: "resource"
+    });
 
-// ---------- (Question) ----------
-ForumCategory.hasMany(Question, {
-    foreignKey: "categoryId",
-    as: "questions"
-});
+    // User - Article
+    User.hasMany(Article, {
+        foreignKey: "createdById",
+        as: "articles",
+        onDelete: "RESTRICT",
+        onUpdate: "CASCADE"
+    });
 
-Question.belongsTo(ForumCategory, {
-    foreignKey: "categoryId",
-    as: "category"
-});
+    Article.belongsTo(User, {
+        foreignKey: "createdById",
+        as: "creator"
+    });
 
-User.hasMany(Question, {
-    foreignKey: "authorId",
-    as: "questions"
-});
+    // Simulation - Article
+    Simulation.belongsToMany(Article, {
+        through: SimulationArticles,
+        foreignKey: "simulationId",
+        otherKey: "articleId",
+        as: "articles"
+    });
 
-Question.belongsTo(User, {
-    foreignKey: "authorId",
-    as: "author"
-});
+    Article.belongsToMany(Simulation, {
+        through: SimulationArticles,
+        foreignKey: "articleId",
+        otherKey: "simulationId",
+        as: "simulations"
+    });
 
+    // Request - RequestItem
+    Request.hasMany(RequestItem, {
+        foreignKey: "requestId",
+        as: "items",
+        onDelete: "CASCADE"
+    });
 
-// ---------- (Answer) ----------
-Question.hasMany(Answer, {
-    foreignKey: "questionId",
-    as: "answers"
-});
+    RequestItem.belongsTo(Request, {
+        foreignKey: "requestId",
+        as: "request"
+    });
 
-Answer.belongsTo(Question, {
-    foreignKey: "questionId",
-    as: "question"
-});
+    Article.hasMany(RequestItem, {
+        foreignKey: "articleId",
+        as: "requestItems",
+        onDelete: "RESTRICT"
+    });
 
-User.hasMany(Answer, {
-    foreignKey: "authorId",
-    as: "answers"
-});
+    RequestItem.belongsTo(Article, {
+        foreignKey: "articleId",
+        as: "article"
+    });
 
-Answer.belongsTo(User, {
-    foreignKey: "authorId",
-    as: "author"
-});
+    // User - Resource
+    User.hasMany(Resource, {
+        foreignKey: "authorId",
+        as: "resources",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE"
+    });
 
-// Respuesta aceptada de una pregunta
-Question.belongsTo(Answer, {
-    foreignKey: "acceptedAnswerId",
-    as: "acceptedAnswer"
-});
+    Resource.belongsTo(User, {
+        foreignKey: "authorId",
+        as: "author"
+    });
 
-Answer.hasMany(Question, {
-    foreignKey: "acceptedAnswerId",
-    as: "acceptedForQuestions"
-});
+    // Article - Resource
+    Article.belongsToMany(Resource, {
+        through: ArticleResource,
+        foreignKey: "articleId",
+        otherKey: "resourceId",
+        as: "resources"
+    });
 
+    Resource.belongsToMany(Article, {
+        through: ArticleResource,
+        foreignKey: "resourceId",
+        otherKey: "articleId",
+        as: "articles"
+    });
 
-// ---------- (Moderation) ----------
-User.hasMany(Moderation, {
-    foreignKey: "moderatorId",
-    as: "moderations"
-});
+    // Resource - Tag
+    Resource.belongsToMany(Tag, {
+        through: ResourceTag,
+        foreignKey: "resourceId",
+        otherKey: "tagId",
+        as: "tags"
+    });
 
-Moderation.belongsTo(User, {
-    foreignKey: "moderatorId",
-    as: "moderator"
-});
+    Tag.belongsToMany(Resource, {
+        through: ResourceTag,
+        foreignKey: "tagId",
+        otherKey: "resourceId",
+        as: "resources"
+    });
 
-Question.hasMany(Moderation, {
-    foreignKey: "questionId",
-    as: "moderations"
-});
+    // User - AuditLog
+    User.hasMany(AuditLog, {
+        foreignKey: "userId",
+        as: "auditLogs",
+        onDelete: "RESTRICT",
+        onUpdate: "CASCADE"
+    });
 
-Moderation.belongsTo(Question, {
-    foreignKey: "questionId",
-    as: "question"
-});
+    AuditLog.belongsTo(User, {
+        foreignKey: "userId",
+        as: "user"
+    });
 
-Answer.hasMany(Moderation, {
-    foreignKey: "answerId",
-    as: "moderations"
-});
-
-Moderation.belongsTo(Answer, {
-    foreignKey: "answerId",
-    as: "answer"
-});
-
-
-// ---------- (SimulationResource) ----------
-Simulation.belongsToMany(Resource, {
-    through: SimulationResource,
-    foreignKey: "simulationId",
-    otherKey: "resourceId",
-    as: "resources"
-});
-
-Resource.belongsToMany(Simulation, {
-    through: SimulationResource,
-    foreignKey: "resourceId",
-    otherKey: "simulationId",
-    as: "simulations"
-});
-
-Simulation.hasMany(SimulationResource, {
-    foreignKey: "simulationId",
-    as: "simulationResources"
-});
-
-SimulationResource.belongsTo(Simulation, {
-    foreignKey: "simulationId",
-    as: "simulation"
-});
-
-Resource.hasMany(SimulationResource, {
-    foreignKey: "resourceId",
-    as: "simulationResources"
-});
-
-SimulationResource.belongsTo(Resource, {
-    foreignKey: "resourceId",
-    as: "resource"
-});
-}
-    // ---------- (StockMovement) ----------
+    // StockMovement
     Article.hasMany(StockMovement, { foreignKey: "articleId", as: "stockMovements" });
     StockMovement.belongsTo(Article, { foreignKey: "articleId", as: "article" });
     User.hasMany(StockMovement, { foreignKey: "userId", as: "stockMovements" });
