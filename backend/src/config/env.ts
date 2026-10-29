@@ -1,36 +1,23 @@
 import dotenv from "dotenv";
-import path from "path";
-
-const envFiles: Record<string, string> = {
-  development: ".env.develop",
-  test: ".env.testing",
-  production: ".env.production",
-};
-
-const nodeEnv = process.env.NODE_ENV || "development";
-const envFile = envFiles[nodeEnv];
-
-if (!envFile) {
-  throw new Error(`NODE_ENV no válido: ${nodeEnv}`);
+const NODE_ENV =
+  process.env.NODE_ENV ?? "development";
+if (!["development", "test", "production"].includes(NODE_ENV)) {
+  throw new Error(`Entorno no válido: ${NODE_ENV}`);
 }
-
-dotenv.config({ path: path.resolve(process.cwd(), envFile) });
-
-function required(name: string): string {
-  const value = process.env[name];
-  if (!value) throw new Error(`Falta la variable de entorno ${name}`);
-  return value;
+if (NODE_ENV !== "production") {
+  dotenv.config({
+    path: `.env.${NODE_ENV}`,
+  });
 }
 
 export const env = {
-  env: nodeEnv,
-  port: Number(process.env.PORT) || 3000,
-  db: {
-    host: required("DB_HOST"),
-    port: Number(process.env.DB_PORT) || 3306,
-    name: required("DB_NAME"),
-    user: required("DB_USER"),
-    password: required("DB_PASSWORD"),
-    logging: process.env.DB_LOGGING === "true",
-  },
+  PORT: Number(process.env.PORT) || 3000,
+
+  DB_DIALECT: process.env.DB_DIALECT || "postgres",
+  DB_HOST: process.env.DB_HOST || "localhost",
+  DB_PORT: Number(process.env.DB_PORT) || 5432,
+  DB_NAME: process.env.DB_NAME || "secondlifeenergy",
+  DB_USER: process.env.DB_USER || "root",
+  DB_PASSWORD: process.env.DB_PASSWORD || "1234",
+  NODE_ENV
 };

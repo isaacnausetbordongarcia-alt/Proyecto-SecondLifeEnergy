@@ -1,15 +1,14 @@
 import { User } from "../modules/users/user.model.js";
-import { Article } from "../modules/article/article.model.js";
+import { Article } from "../modules/Article/Article.model.js";
 import { Simulation } from "../modules/Simulation/Simulation.model.js";
 import { SimulationArticles } from "../modules/SimulationArticle/SimulationArticles.model.js";
 import { RequestItem } from "../modules/request-item/request-item.model.js";
 import { Request } from "../modules/requests/request.model.js";
-import { Resource } from "../modules/resource/resource.model.js";
+import { Resource } from "../modules/Resource/Resource.model.js";
 import { ArticleResource } from "../modules/article-resource/article-resource.model.js";
 import { Tag } from "../modules/tags/tag.model.js";
 import { ResourceTag } from "../modules/resource-tag/resource-tag.model.js";
 import { AuditLog } from "../modules/audit-log/audit-log.model.js";
-
 import { ArticleCategory } from "../modules/article-categories/article-category.model.js";
 import { ArticleReview } from "../modules/article-reviews/article-review.model.js";
 import { Moderation } from "../modules/moderations/moderation.model.js";
