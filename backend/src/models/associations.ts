@@ -9,7 +9,6 @@ import { ArticleResource } from "../modules/article-resource/article-resource.mo
 import { Tag } from "../modules/tags/tag.model.js";
 import { ResourceTag } from "../modules/resource-tag/resource-tag.model.js";
 import { AuditLog } from "../modules/audit-log/audit-log.model.js";
-
 import { ArticleCategory } from "../modules/article-categories/article-category.model.js";
 import { ArticleReview } from "../modules/article-reviews/article-review.model.js";
 import { Moderation } from "../modules/moderations/moderation.model.js";
