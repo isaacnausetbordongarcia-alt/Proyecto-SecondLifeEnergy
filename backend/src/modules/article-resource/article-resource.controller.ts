@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { ForeignKeyConstraintError, ValidationError } from "sequelize";
-import { ArticleResourceService } from "./ArticleResource.service.js";
+import { ArticleResourceService } from "./article-resource.service.js";
 
 function handleError(res: Response, error: unknown) {
     if (error instanceof ForeignKeyConstraintError) {

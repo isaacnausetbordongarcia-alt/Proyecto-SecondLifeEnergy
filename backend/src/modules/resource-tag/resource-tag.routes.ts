@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { ResourceTagController } from "./ResourceTag.controller.js";
+import { ResourceTagController } from "./resource-tag.controller.js";
 
 const router = Router();
 
