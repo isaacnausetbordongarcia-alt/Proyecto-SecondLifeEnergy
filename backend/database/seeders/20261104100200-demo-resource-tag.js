@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface) {
-    // Requiere Tags con id 1..8 (ver README)
+    // Requiere Tags con id 1..8 
     const rows = [
       [1, 1], [1, 3],
       [2, 1], [2, 3], [2, 7],
