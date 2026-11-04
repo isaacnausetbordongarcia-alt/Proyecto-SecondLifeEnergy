@@ -16,7 +16,7 @@ module.exports = {
         type: Sequelize.INTEGER.UNSIGNED,
         primaryKey: true,
         allowNull: false,
-        references: { model: "Tags", key: "id" },
+        references: { model: "tags", key: "id" },
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
       },

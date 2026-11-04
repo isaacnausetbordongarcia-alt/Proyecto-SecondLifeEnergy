@@ -13,7 +13,7 @@ module.exports = {
       requestId: {
         type: Sequelize.INTEGER.UNSIGNED,
         allowNull: false,
-        references: { model: "Requests", key: "id" },
+        references: { model: "requests", key: "id" },
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
       },
