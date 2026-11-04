@@ -13,11 +13,17 @@ module.exports = {
       invited_by_id: {
         type: Sequelize.INTEGER.UNSIGNED,
         allowNull: false,
+        references: { model: 'users', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'RESTRICT',
       },
 
       role_id: {
         type: Sequelize.INTEGER.UNSIGNED,
         allowNull: false,
+        references: { model: 'roles', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'RESTRICT',
       },
 
       email: {
@@ -41,11 +47,15 @@ module.exports = {
         allowNull: true,
       },
 
-      createdAt: Sequelize.DATE,
-    })
+      created_at: {
+        type: Sequelize.DATE,
+      },
+    });
+
+    await queryInterface.addIndex('invitations', ['email']);
   },
 
-  async down(queryInterface, Sequelize) {
+  async down(queryInterface) {
     await queryInterface.dropTable('invitations');
-  }
+  },
 };

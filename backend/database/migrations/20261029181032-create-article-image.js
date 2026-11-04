@@ -13,6 +13,9 @@ module.exports = {
       article_id: {
         type: Sequelize.INTEGER.UNSIGNED,
         allowNull: false,
+        references: { model: 'articles', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
 
       url: {
@@ -26,14 +29,16 @@ module.exports = {
       },
 
       sort_order: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER.UNSIGNED,
         allowNull: false,
         defaultValue: 0,
       },
     });
+
+    await queryInterface.addIndex('article_images', ['article_id', 'sort_order']);
   },
 
-  async down(queryInterface, Sequelize) {
+  async down(queryInterface) {
     await queryInterface.dropTable('article_images');
-  }
+  },
 };
