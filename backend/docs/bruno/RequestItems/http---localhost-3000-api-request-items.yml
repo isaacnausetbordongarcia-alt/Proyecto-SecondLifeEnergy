@@ -1,0 +1,24 @@
+info:
+  name: http://localhost:3000/api/request-items
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:3000/api/request-items
+  body:
+    type: json
+    data: |-
+      {
+        "requestId": 1,
+        "articleId": 5,
+        "quantity": 2
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

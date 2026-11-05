@@ -1,0 +1,29 @@
+info:
+  name: http://localhost:3000/api/resources
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:3000/api/resources
+  body:
+    type: json
+    data: |-
+      {
+        "authorId": 1,
+        "title": "Recurso de prueba",
+        "type": "guide",
+        "topic": "baterías",
+        "difficulty": "beginner",
+        "url": "https://example.com/recurso",
+        "status": "draft",
+        "publishedAt": "2026-12-01T09:00:00.000Z"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

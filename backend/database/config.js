@@ -2,13 +2,18 @@ const fs = require("node:fs");
 const path = require("node:path");
 const dotenv = require("dotenv");
 
+const ENV_FILES = {
+    development: ".env.develop",
+    test: ".env.testing",
+};
+
 function getConfig(environment) {
     let variables;
 
     if (environment === "production") {
         variables = process.env;
     } else {
-        const envPath = path.resolve(__dirname, "..",`.env.${environment}`);
+        const envPath = path.resolve(__dirname, "..", ENV_FILES[environment]);
         variables = dotenv.parse(fs.readFileSync(envPath));
     }
     return {

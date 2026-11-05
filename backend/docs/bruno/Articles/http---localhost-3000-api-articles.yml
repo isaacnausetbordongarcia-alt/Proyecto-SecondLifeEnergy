@@ -1,0 +1,28 @@
+info:
+  name: http://localhost:3000/api/articles
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:3000/api/articles
+  body:
+    type: json
+    data: |-
+      {
+        "categoryId": 1,
+        "createdById": 1,
+        "name": "Batería de prueba",
+        "type": "battery",
+        "specifications": "{}",
+        "stock": 3,
+        "status": "available"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

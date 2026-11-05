@@ -3,8 +3,9 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface) {
-    await queryInterface.bulkInsert("Simulations", [
+    await queryInterface.bulkInsert("simulations", [
       {
+        id: 1,
         title: "Circuito serie y paralelo de celdas",
         description: "Montaje virtual de un pack de baterías",
         platform: "Tinkercad",
@@ -13,6 +14,7 @@ module.exports = {
         materials: "Celdas 18650, multímetro virtual",
       },
       {
+        id: 2,
         title: "Instalación solar aislada",
         description: "Panel, regulador, batería e inversor",
         platform: "PhET",
@@ -21,9 +23,20 @@ module.exports = {
         materials: null,
       },
     ]);
+
+    // Ajustar el autoincremento en PostgreSQL
+    if (queryInterface.sequelize.getDialect() === "postgres") {
+      await queryInterface.sequelize.query(`
+        SELECT setval(
+          pg_get_serial_sequence('public.simulations', 'id'),
+          COALESCE((SELECT MAX(id) FROM public.simulations), 0) + 1,
+          false
+        );
+      `);
+    }
   },
 
   async down(queryInterface) {
-    await queryInterface.bulkDelete("Simulations", null, {});
+    await queryInterface.bulkDelete("simulations", null, {});
   },
 };

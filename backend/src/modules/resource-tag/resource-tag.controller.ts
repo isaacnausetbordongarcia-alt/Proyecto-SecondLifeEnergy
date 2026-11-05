@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { ForeignKeyConstraintError, ValidationError } from "sequelize";
-import { ResourceTagService } from "./ResourceTag.service.js";
+import { ResourceTagService } from "./resource-tag.service.js";
 
 function handleError(res: Response, error: unknown) {
     if (error instanceof ForeignKeyConstraintError) {

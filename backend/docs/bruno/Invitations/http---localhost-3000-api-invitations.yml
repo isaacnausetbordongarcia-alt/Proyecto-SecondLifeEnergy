@@ -1,0 +1,25 @@
+info:
+  name: http://localhost:3000/api/invitations
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:3000/api/invitations
+  body:
+    type: json
+    data: |-
+      {
+        "invitedById": 1,
+        "roleId": 2,
+        "email": "invitado@example.com",
+        "expiresAt": "2026-12-31T23:59:59.000Z"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

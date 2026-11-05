@@ -1,0 +1,23 @@
+info:
+  name: http://localhost:3000/api/role-permissions
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:3000/api/role-permissions
+  body:
+    type: json
+    data: |-
+      {
+        "roleId": 1,
+        "permissionId": 5
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

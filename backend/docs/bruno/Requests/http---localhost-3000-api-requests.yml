@@ -1,0 +1,25 @@
+info:
+  name: http://localhost:3000/api/requests
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:3000/api/requests
+  body:
+    type: json
+    data: |-
+      {
+        "reference": "REQ-2026-0004",
+        "contactName": "Luke Skywalker",
+        "contactEmail": "luke@example.com",
+        "status": "pending"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

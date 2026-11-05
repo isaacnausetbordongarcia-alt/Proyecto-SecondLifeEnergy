@@ -3,24 +3,24 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("RequestItems", {
+    await queryInterface.createTable("request_items", {
       id: {
         type: Sequelize.INTEGER.UNSIGNED,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
       },
-      requestId: {
+      request_id: {
         type: Sequelize.INTEGER.UNSIGNED,
         allowNull: false,
-        references: { model: "Requests", key: "id" },
+        references: { model: "requests", key: "id" },
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
       },
-      articleId: {
+      article_id: {
         type: Sequelize.INTEGER.UNSIGNED,
         allowNull: false,
-        references: { model: "Articles", key: "id" },
+        references: { model: "articles", key: "id" },
         onDelete: "RESTRICT",
         onUpdate: "CASCADE",
       },
@@ -29,6 +29,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable("RequestItems");
+    await queryInterface.dropTable("request_items");
   },
 };

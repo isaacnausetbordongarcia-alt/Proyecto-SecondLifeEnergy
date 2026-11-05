@@ -1,4 +1,3 @@
-
 "use strict";
 
 /** @type {import('sequelize-cli').Migration} */
@@ -18,12 +17,12 @@ module.exports = {
         unique: true,
       },
 
-      contactName: {
+      contact_name: {
         type: Sequelize.STRING(150),
         allowNull: false,
       },
 
-      contactEmail: {
+      contact_email: {
         type: Sequelize.STRING(150),
         allowNull: false,
       },
@@ -39,7 +38,7 @@ module.exports = {
         defaultValue: "pending",
       },
 
-      createdAt: {
+      created_at: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),

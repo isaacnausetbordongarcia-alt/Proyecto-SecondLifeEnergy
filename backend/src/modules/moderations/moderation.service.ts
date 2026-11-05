@@ -1,6 +1,7 @@
 import { Moderation } from "./moderation.model.js";
 import { Question } from "../questions/question.model.js";
 import { Answer } from "../answers/answer.model.js";
+import { User } from "../users/user.model.js";
 
 export class ModerationService {
 
@@ -48,7 +49,7 @@ export class ModerationService {
   static async findEagerById(id: number) {
     return Moderation.findByPk(id, {
       include: [
-        { model: Moderator, as: "moderator" },
+        { model: User, as: "moderator" },
         { model: Question, as: "question" },
         { model: Answer, as: "answer" },
       ],

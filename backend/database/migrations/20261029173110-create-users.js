@@ -1,4 +1,3 @@
-
 "use strict";
 
 /** @type {import('sequelize-cli').Migration} */
@@ -23,24 +22,24 @@ module.exports = {
         unique: true,
       },
 
-      passwordHash: {
+      password_hash: {
         type: Sequelize.STRING(255),
         allowNull: false,
       },
 
-      isActive: {
+      is_active: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: true,
       },
 
-      createdAt: {
+      created_at: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
 
-      updatedAt: {
+      updated_at: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),

@@ -3,20 +3,20 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("SimulationArticles", {
-      simulationId: {
+    await queryInterface.createTable("simulation_articles", {
+      simulation_id: {
         type: Sequelize.INTEGER.UNSIGNED,
         primaryKey: true,
         allowNull: false,
-        references: { model: "Simulations", key: "id" },
+        references: { model: "simulations", key: "id" },
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
       },
-      articleId: {
+      article_id: {
         type: Sequelize.INTEGER.UNSIGNED,
         primaryKey: true,
         allowNull: false,
-        references: { model: "Articles", key: "id" },
+        references: { model: "articles", key: "id" },
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
       },
@@ -24,6 +24,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable("SimulationArticles");
+    await queryInterface.dropTable("simulation_articles");
   },
 };

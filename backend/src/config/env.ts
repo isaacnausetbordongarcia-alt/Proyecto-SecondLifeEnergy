@@ -4,9 +4,16 @@ const NODE_ENV =
 if (!["development", "test", "production"].includes(NODE_ENV)) {
   throw new Error(`Entorno no válido: ${NODE_ENV}`);
 }
+
+
+const ENV_FILES: Record<string, string> = {
+  development: ".env.develop",
+  test: ".env.testing",
+};
+
 if (NODE_ENV !== "production") {
   dotenv.config({
-    path: `.env.${NODE_ENV}`,
+    path: ENV_FILES[NODE_ENV],
   });
 }
 
