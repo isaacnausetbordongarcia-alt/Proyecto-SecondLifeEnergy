@@ -13,11 +13,17 @@ module.exports = {
       article_id: {
         type: Sequelize.INTEGER.UNSIGNED,
         allowNull: false,
+        references: { model: 'articles', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'RESTRICT',
       },
 
       user_id: {
         type: Sequelize.INTEGER.UNSIGNED,
         allowNull: false,
+        references: { model: 'users', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'RESTRICT',
       },
 
       type: {
@@ -39,7 +45,7 @@ module.exports = {
     })
   },
 
-  async down(queryInterface, Sequelize) {
+  async down(queryInterface) {
     await queryInterface.dropTable('stock_movements');
-  }
+  },
 };
