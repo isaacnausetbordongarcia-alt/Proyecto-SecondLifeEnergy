@@ -1,0 +1,22 @@
+info:
+  name: http://localhost:3000/api/resources_3
+  type: http
+  seq: 4
+
+http:
+  method: PUT
+  url: http://localhost:3000/api/resources/1
+  body:
+    type: json
+    data: |-
+      {
+        "status": "published"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

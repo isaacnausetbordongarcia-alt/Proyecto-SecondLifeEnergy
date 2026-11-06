@@ -15,12 +15,12 @@ module.exports = {
       [8, 3], [8, 1], [8, 5],
       [9, 2],
       [10, 3], [10, 5],
-    ].map(([resourceId, tagId]) => ({ resourceId, tagId }));
+    ].map(([resourceId, tagId]) => ({ resource_id: resourceId, tag_id: tagId }));
 
-    await queryInterface.bulkInsert("ResourceTags", rows);
+    await queryInterface.bulkInsert("resource_tags", rows);
   },
 
   async down(queryInterface) {
-    await queryInterface.bulkDelete("ResourceTags", null, {});
+    await queryInterface.bulkDelete("resource_tags", null, {});
   },
 };

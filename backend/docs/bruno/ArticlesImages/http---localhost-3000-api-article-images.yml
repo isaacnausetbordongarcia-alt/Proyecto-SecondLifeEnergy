@@ -1,0 +1,23 @@
+info:
+  name: http://localhost:3000/api/article-images
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:3000/api/article-images
+  body:
+    type: json
+    data: |-
+      {
+        "articleId": 1,
+        "url": "imagen-prueba.jpg"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

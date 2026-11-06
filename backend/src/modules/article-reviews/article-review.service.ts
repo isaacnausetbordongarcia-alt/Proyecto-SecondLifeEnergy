@@ -1,5 +1,5 @@
 import { ArticleReview } from "./article-review.model.js";
-import { Article } from "../articles/article.model";
+import { Article } from "../articles/article.model.js";
 import { User } from "../users/user.model.js";
 
 export class ArticleReviewService {

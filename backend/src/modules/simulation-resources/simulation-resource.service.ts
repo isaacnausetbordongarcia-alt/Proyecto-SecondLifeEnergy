@@ -1,6 +1,6 @@
 import { SimulationResource } from "./simulation-resource.model.js";
 import { Simulation } from "../simulations/simulation.model.js";
-import { Resource } from "../resources/resource.model";
+import { Resource } from "../resources/resource.model.js";
 
 export class SimulationResourceService {
 

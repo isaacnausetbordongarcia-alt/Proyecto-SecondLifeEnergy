@@ -1,0 +1,26 @@
+info:
+  name: http://localhost:3000/api/questions
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:3000/api/questions
+  body:
+    type: json
+    data: |-
+      {
+        "categoryId": 1,
+        "authorId": 2,
+        "title": "¿Cuánto dura una batería?",
+        "content": "Quiero saber cuántos años dura.",
+        "status": "open"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

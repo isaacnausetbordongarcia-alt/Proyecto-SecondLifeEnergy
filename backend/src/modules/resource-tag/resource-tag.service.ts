@@ -1,5 +1,5 @@
 import { ResourceTag } from "./resource-tag.model.js";
-import { Resource } from "../resource/resource.model.js";
+import { Resource } from "../resources/resource.model.js";
 import { Tag } from "../tags/tag.model.js";
 
 export class ResourceTagService {

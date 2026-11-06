@@ -1,0 +1,22 @@
+info:
+  name: http://localhost:3000/api/roles
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:3000/api/roles
+  body:
+    type: json
+    data: |-
+      {
+        "name": "tester"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

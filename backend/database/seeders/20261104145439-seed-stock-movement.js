@@ -1,18 +1,46 @@
-"use strict";
+'use strict';
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface) {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable('stock_movements', {
+      id: { type: Sequelize.INTEGER.UNSIGNED, autoIncrement: true, primaryKey: true },
+      article_id: {
+        type: Sequelize.INTEGER.UNSIGNED,
+        allowNull: false,
+        references: { model: 'articles', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'RESTRICT',
+      },
+      user_id: {
+        type: Sequelize.INTEGER.UNSIGNED,
+        allowNull: false,
+        references: { model: 'users', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'RESTRICT',
+      },
+      type: { type: Sequelize.STRING(30), allowNull: false },
+      quantity: { type: Sequelize.INTEGER, allowNull: false },
+      reason: { type: Sequelize.STRING(255), allowNull: true },
+      created_at: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      },
+    });
 
-    await queryInterface.bulkInsert("stock_movements", [
-      { article_id: 1, user_id: 1, type: "entry", quantity: 10,  reason: "Initial stock", created_at: new Date() },
-      { article_id: 2, user_id: 2, type: "entry", quantity: 5, reason: "Initial stock", created_at: new Date() },
-      { article_id: 3, user_id: 3, type: "entry", quantity: 15, reason: "Initial stock", created_at: new Date() },
-      { article_id: 4, user_id: 4, type: "entry", quantity: 8, reason: "Initial stock", created_at: new Date() },
-    ]);
+    await queryInterface.addIndex('stock_movements', ['article_id', 'created_at']);
+    await queryInterface.addIndex('stock_movements', ['user_id']);
+
+    await queryInterface.addConstraint('stock_movements', {
+      fields: ['quantity'],
+      type: 'check',
+      where: { quantity: { [Sequelize.Op.ne]: 0 } },
+      name: 'chk_stock_movements_quantity_not_zero',
+    });
   },
 
   async down(queryInterface) {
-    await queryInterface.bulkDelete("stock_movements", null, {});
+    await queryInterface.dropTable('stock_movements');
   },
 };

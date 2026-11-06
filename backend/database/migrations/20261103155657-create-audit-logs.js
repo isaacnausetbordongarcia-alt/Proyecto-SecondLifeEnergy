@@ -3,14 +3,14 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("AuditLogs", {
+    await queryInterface.createTable("audit_logs", {
       id: {
         type: Sequelize.INTEGER.UNSIGNED,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
       },
-      userId: {
+      user_id: {
         type: Sequelize.INTEGER.UNSIGNED,
         allowNull: false,
         references: { model: "users", key: "id" },
@@ -18,11 +18,11 @@ module.exports = {
         onUpdate: "CASCADE",
       },
       entity: { type: Sequelize.STRING, allowNull: false },
-      entityId: { type: Sequelize.INTEGER.UNSIGNED, allowNull: false },
+      entity_id: { type: Sequelize.INTEGER.UNSIGNED, allowNull: false },
       action: { type: Sequelize.STRING, allowNull: false },
-      previousValues: { type: Sequelize.JSON, allowNull: true },
-      newValues: { type: Sequelize.JSON, allowNull: true },
-      createdAt: {
+      previous_values: { type: Sequelize.JSON, allowNull: true },
+      new_values: { type: Sequelize.JSON, allowNull: true },
+      created_at: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
@@ -30,12 +30,12 @@ module.exports = {
     });
 
     // Acelera las consultas del historial por entidad
-    await queryInterface.addIndex("AuditLogs", ["entity", "entityId"], {
+    await queryInterface.addIndex("audit_logs", ["entity", "entity_id"], {
       name: "audit_logs_entity_entity_id",
     });
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable("AuditLogs");
+    await queryInterface.dropTable("audit_logs");
   },
 };

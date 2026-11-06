@@ -41,22 +41,8 @@ module.exports = {
         allowNull: true,
       },
 
-      created_at: {
-        type: Sequelize.DATE,
-        allowNull: false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-      },
-    });
-
-    await queryInterface.addIndex('stock_movements', ['article_id', 'created_at']);
-    await queryInterface.addIndex('stock_movements', ['user_id']);
-
-    await queryInterface.addConstraint('stock_movements', {
-      fields: ['quantity'],
-      type: 'check',
-      where: { quantity: { [Sequelize.Op.ne]: 0 } },
-      name: 'chk_stock_movements_quantity_not_zero',
-    });
+      created_at: { type: Sequelize.DATE, allowNull: false, defaultValue: Sequelize.literal('CURRENT_TIMESTAMP') },
+    })
   },
 
   async down(queryInterface) {

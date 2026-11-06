@@ -1,5 +1,5 @@
 import { Question } from "./question.model.js";
-import { Category } from "../categories/category.model";
+import { ForumCategory } from "../forum-categories/forum-category.model.js";
 import { User } from "../users/user.model.js";
 import { Answer } from "../answers/answer.model.js";
 
@@ -51,7 +51,7 @@ export class QuestionService {
   static async findEagerById(id: number) {
     return Question.findByPk(id, {
       include: [
-        { model: Category, as: "category" },
+        { model: ForumCategory, as: "category" },
         { model: User, as: "author" },
         { model: Answer, as: "acceptedAnswer" },
       ],

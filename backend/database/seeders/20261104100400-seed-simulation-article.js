@@ -7,12 +7,12 @@ module.exports = {
     const rows = [
       [1, 1], [1, 2], [1, 6], [1, 11],
       [2, 3], [2, 4], [2, 5], [2, 8], [2, 9],
-    ].map(([simulationId, articleId]) => ({ simulationId, articleId }));
+    ].map(([simulationId, articleId]) => ({ simulation_id: simulationId, article_id: articleId }));
 
-    await queryInterface.bulkInsert("SimulationArticles", rows);
+    await queryInterface.bulkInsert("simulation_articles", rows);
   },
 
   async down(queryInterface) {
-    await queryInterface.bulkDelete("SimulationArticles", null, {});
+    await queryInterface.bulkDelete("simulation_articles", null, {});
   },
 };

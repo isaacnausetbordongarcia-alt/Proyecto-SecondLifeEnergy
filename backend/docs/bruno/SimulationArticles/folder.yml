@@ -1,0 +1,7 @@
+info:
+  name: SimulationArticles
+  type: folder
+  seq: 20
+
+request:
+  auth: inherit

@@ -3,16 +3,16 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("ResourceTags", {
-      resourceId: {
+    await queryInterface.createTable("resource_tags", {
+      resource_id: {
         type: Sequelize.INTEGER.UNSIGNED,
         primaryKey: true,
         allowNull: false,
-        references: { model: "Resources", key: "id" },
+        references: { model: "resources", key: "id" },
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
       },
-      tagId: {
+      tag_id: {
         type: Sequelize.INTEGER.UNSIGNED,
         primaryKey: true,
         allowNull: false,
@@ -24,6 +24,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable("ResourceTags");
+    await queryInterface.dropTable("resource_tags");
   },
 };

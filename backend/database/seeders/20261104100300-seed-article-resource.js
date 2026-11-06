@@ -16,12 +16,12 @@ module.exports = {
       [9, 3],
       [11, 8], [11, 4],
       [12, 10], [12, 8],
-    ].map(([articleId, resourceId]) => ({ articleId, resourceId }));
+    ].map(([articleId, resourceId]) => ({ article_id: articleId, resource_id: resourceId }));
 
-    await queryInterface.bulkInsert("ArticleResources", rows);
+    await queryInterface.bulkInsert("article_resources", rows);
   },
 
   async down(queryInterface) {
-    await queryInterface.bulkDelete("ArticleResources", null, {});
+    await queryInterface.bulkDelete("article_resources", null, {});
   },
 };
