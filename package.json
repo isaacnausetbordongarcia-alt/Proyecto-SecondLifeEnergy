@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "cross-env": "^10.1.0",
+    "sequelize-cli": "^6.6.5"
+  }
+}
