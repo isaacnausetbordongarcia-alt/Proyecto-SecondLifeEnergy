@@ -59,7 +59,7 @@ router.use("/moderations", moderationRoutes);
 
 router.use("/audit-logs", auditLogRoutes);
 
-router.use("/", articleResourceRoutes);
-router.use("/", resourceTagRoutes);
+router.use("/article-resources", articleResourceRoutes);
+router.use("/resource-tags", resourceTagRoutes);
 
 export default router;
