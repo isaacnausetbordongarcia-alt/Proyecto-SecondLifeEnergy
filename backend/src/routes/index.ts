@@ -25,6 +25,7 @@ import questionRoutes from "../modules/questions/question.routes.js";
 import answerRoutes from "../modules/answers/answer.routes.js";
 import moderationRoutes from "../modules/moderations/moderation.routes.js";
 import auditLogRoutes from "../modules/audit-log/audit-log.routes.js";
+import examAuditRoutes from "../modules/examaudit/examaudit.routes.js";
 
 const router = Router();
 
@@ -61,5 +62,7 @@ router.use("/audit-logs", auditLogRoutes);
 
 router.use("/article-resources", articleResourceRoutes);
 router.use("/resource-tags", resourceTagRoutes);
+
+router.use("/exam-audits", examAuditRoutes);
 
 export default router;

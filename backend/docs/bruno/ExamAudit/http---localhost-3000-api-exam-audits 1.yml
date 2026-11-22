@@ -1,0 +1,24 @@
+info:
+  name: http://localhost:3000/api/exam-audits
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:3000/api/exam-audits
+  body:
+    type: json
+    data: |-
+      {
+        "description": "Prueba desde Bruno",
+        "operation": "CREATE",
+        "userId": 1
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

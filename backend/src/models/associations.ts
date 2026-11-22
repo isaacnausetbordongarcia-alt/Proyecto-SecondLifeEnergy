@@ -24,8 +24,17 @@ import { Invitation } from "../modules/invitations/invitation.model.js";
 import { KitComponent } from "../modules/kit-components/kitComponent.model.js";
 import { ArticleImage } from "../modules/article-images/articleImage.model.js";
 import { StockMovement } from "../modules/stock-movements/stockMovement.model.js";
+import { ExamAudit } from "../modules/examaudit/examaudit.model.js";
 
 export function defineAssociations() {
+
+
+    // User 1 ---- 0..N ExamAudit
+    User.hasMany(ExamAudit, { foreignKey: "userId", as: "examAudits" });
+    ExamAudit.belongsTo(User, { foreignKey: "userId", as: "user" });
+
+
+
     // UserRole
     User.hasMany(UserRole, { foreignKey: "userId", as: "userRoles", onDelete: "CASCADE" });
     UserRole.belongsTo(User, { foreignKey: "userId", as: "user" });
