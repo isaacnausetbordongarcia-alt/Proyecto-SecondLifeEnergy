@@ -1,4 +1,4 @@
-import { UserRole } from "./userRole.model.js";
+import { UserRole } from "../rcba/userRole.model.js";
 
 export class UserRoleService {
 

@@ -43,6 +43,6 @@ Permission.init(
 
         tableName: "permissions",
 
-        timestamps: false,
+        timestamps: true,
     }
 );

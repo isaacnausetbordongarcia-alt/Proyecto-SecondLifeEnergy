@@ -7,6 +7,7 @@ import {
 } from "sequelize";
 
 import { sequelize } from "../../config/database.js";
+import { Role } from "../rcba/role.model.js";
 
 export class User extends Model<
     InferAttributes<User>,
@@ -25,6 +26,7 @@ export class User extends Model<
     declare createdAt: CreationOptional<Date>;
 
     declare updatedAt: CreationOptional<Date>;
+    declare roles?: Role[];
 }
 
 User.init(

@@ -3,7 +3,7 @@ const path = require("node:path");
 const dotenv = require("dotenv");
 
 const ENV_FILES = {
-    development: ".env.develop",
+    development: ".env.develop.example",
     test: ".env.testing",
 };
 

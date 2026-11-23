@@ -1,6 +1,6 @@
 import { Question } from "./question.model.js";
 import { ForumCategory } from "../forum-categories/forum-category.model.js";
-import { User } from "../users/user.model.js";
+import { User } from "../auth/user.model.js";
 import { Answer } from "../answers/answer.model.js";
 
 export class QuestionService {

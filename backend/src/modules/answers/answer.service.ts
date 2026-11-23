@@ -1,6 +1,6 @@
 import { Answer } from "./answer.model.js";
 import { Question } from "../questions/question.model.js";
-import { User } from "../users/user.model.js";
+import { User } from "../auth/user.model.js";
 
 export class AnswerService {
 
