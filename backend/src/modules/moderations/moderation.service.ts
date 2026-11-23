@@ -1,7 +1,7 @@
 import { Moderation } from "./moderation.model.js";
 import { Question } from "../questions/question.model.js";
 import { Answer } from "../answers/answer.model.js";
-import { User } from "../users/user.model.js";
+import { User } from "../auth/user.model.js";
 
 export class ModerationService {
 

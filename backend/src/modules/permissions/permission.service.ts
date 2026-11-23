@@ -1,4 +1,4 @@
-import { Permission } from "./permission.model.js";
+import { Permission } from "../rcba/permission.model.js";
 
 export class PermissionService {
 

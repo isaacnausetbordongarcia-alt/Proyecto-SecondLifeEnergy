@@ -1,4 +1,4 @@
-import { Role } from "./role.model.js";
+import { Role } from "../rcba/role.model.js";
 
 export class RoleService {
 
