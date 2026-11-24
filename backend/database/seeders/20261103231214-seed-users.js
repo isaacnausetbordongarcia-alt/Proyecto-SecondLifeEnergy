@@ -6,9 +6,9 @@ module.exports = {
     // Ids fijos: el resto de seeders usa los usuarios 1 a 4
     await queryInterface.bulkInsert("users", [
       { id: 1, name: "Admin", email: "admin@secondlifeenergy.com", password_hash: "hash-pendiente-admin", is_active: true },
-      { id: 2, name: "Laura Técnica", email: "laura@secondlifeenergy.com", password_hash: "hash-pendiente-laura", is_active: true },
-      { id: 3, name: "Carlos Moderador", email: "carlos@secondlifeenergy.com", password_hash: "hash-pendiente-carlos", is_active: true },
-      { id: 4, name: "Ana Usuaria", email: "ana@secondlifeenergy.com", password_hash: "hash-pendiente-ana", is_active: false },
+      { id: 2, name: "Profesor", email: "profesor@secondlifeenergy.com", password_hash: "hash-pendiente-laura", is_active: true },
+       // { id: 3, name: "Carlos Moderador", email: "carlos@secondlifeenergy.com", password_hash: "hash-pendiente-carlos", is_active: true },
+       // { id: 4, name: "Ana Usuaria", email: "ana@secondlifeenergy.com", password_hash: "hash-pendiente-ana", is_active: false },
     ]);
 
     // Ajustar el autoincremento en PostgreSQL
