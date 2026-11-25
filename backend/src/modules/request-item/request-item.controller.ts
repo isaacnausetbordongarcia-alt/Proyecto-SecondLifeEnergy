@@ -2,53 +2,16 @@ import { Request, Response, NextFunction } from "express";
 import { RequestItemService } from "./request-item.service.js";
 import { RequestService } from "../requests/request.service.js";
 import { ArticleService } from "../articles/article.service.js";
-import { getRoleNames } from "../utils/roles.js";
-
-// Carga la request padre y comprueba que el usuario puede acceder a ella.
-// Si no existe responde 404 y si no tiene permiso 403; en ambos casos
-// devuelve null para que el controller haga return.
-async function getAccessibleRequest(requestId: number, res: Response) {
-    const contactRequest = await RequestService.findById(requestId);
-
-    if (!contactRequest) {
-        res.status(404).json({
-            message: "Request not found",
-        });
-
-        return null;
-    }
-
-    // bearerAuth guarda el usuario del token en res.locals.authUser
-    const { user } = res.locals.authUser;
-    const roleNames = await getRoleNames(user);
-
-    if (!RequestItemService.canAccess(contactRequest, user.id, roleNames)) {
-        res.status(403).json({
-            message: "Forbidden",
-        });
-
-        return null;
-    }
-
-    return contactRequest;
-}
 
 export class RequestItemController {
 
-    // GET /request-items
-    // Admin ve todos; el resto solo los items de sus requests.
     static async getAll(
         req: Request,
         res: Response,
         next: NextFunction
     ) {
         try {
-            const { user } = res.locals.authUser;
-            const roleNames = await getRoleNames(user);
-
-            const requestItems = roleNames.includes("admin")
-                ? await RequestItemService.findAll()
-                : await RequestItemService.findAll(user.id);
+            const requestItems = await RequestItemService.findAll();
 
             res.json(requestItems);
         } catch (error) {
@@ -57,7 +20,6 @@ export class RequestItemController {
     }
 
 
-    // GET /requests/:requestId/items
     static async getByRequestId(
         req: Request,
         res: Response,
@@ -66,10 +28,15 @@ export class RequestItemController {
         try {
             const requestId = Number(req.params.requestId);
 
-            // 404 si no existe, 403 si no es admin ni autor de la request
-            const contactRequest = await getAccessibleRequest(requestId, res);
+            const contactRequest = await RequestService.findById(requestId);
 
-            if (!contactRequest) return;
+            if (!contactRequest) {
+                res.status(404).json({
+                    message: "Request not found",
+                });
+
+                return;
+            }
 
             const requestItems = await RequestItemService.findByRequestId(
                 requestId
@@ -83,7 +50,6 @@ export class RequestItemController {
     }
 
 
-    // GET /request-items/:id
     static async getById(
         req: Request,
         res: Response,
@@ -102,14 +68,6 @@ export class RequestItemController {
                 return;
             }
 
-            // La autoría se comprueba sobre la request a la que pertenece
-            const contactRequest = await getAccessibleRequest(
-                requestItem.requestId,
-                res
-            );
-
-            if (!contactRequest) return;
-
             res.json(requestItem);
 
         } catch (error) {
@@ -118,8 +76,6 @@ export class RequestItemController {
     }
 
 
-    // POST /request-items
-    // Solo se pueden añadir items a una request propia (o ser admin).
     static async create(
         req: Request,
         res: Response,
@@ -144,9 +100,15 @@ export class RequestItemController {
                 return;
             }
 
-            const contactRequest = await getAccessibleRequest(requestId, res);
+            const contactRequest = await RequestService.findById(requestId);
 
-            if (!contactRequest) return;
+            if (!contactRequest) {
+                res.status(404).json({
+                    message: "Request not found",
+                });
+
+                return;
+            }
 
             const article = await ArticleService.findById(articleId);
 
@@ -172,8 +134,6 @@ export class RequestItemController {
     }
 
 
-    // PUT /request-items/:id
-    // requestId no se puede cambiar: un item no se mueve a otra request.
     static async update(
         req: Request,
         res: Response,
@@ -191,13 +151,6 @@ export class RequestItemController {
 
                 return;
             }
-
-            const contactRequest = await getAccessibleRequest(
-                requestItem.requestId,
-                res
-            );
-
-            if (!contactRequest) return;
 
             const { articleId, quantity } = req.body;
 
@@ -240,8 +193,6 @@ export class RequestItemController {
     }
 
 
-    // DELETE /request-items/:id
-    // Misma regla de autoría que en update.
     static async delete(
         req: Request,
         res: Response,
@@ -259,13 +210,6 @@ export class RequestItemController {
 
                 return;
             }
-
-            const contactRequest = await getAccessibleRequest(
-                requestItem.requestId,
-                res
-            );
-
-            if (!contactRequest) return;
 
             await RequestItemService.delete(requestItem);
 
