@@ -40,6 +40,36 @@ module.exports = {
       {id: 27, code: "forumcategories.update", description: "Actualizar categorías del foro"},
       {id: 28, code: "forumcategories.delete", description: "Eliminar categorías del foro"},
 
+      {id: 29, code: "user-role.read", description: "Leer asignaciones de roles a usuarios"},
+      {id: 30, code: "user-role.create", description: "Crear asignaciones de roles a usuarios"},
+      {id: 31, code: "user-role.update", description: "Actualizar asignaciones de roles a usuarios"},
+      {id: 32, code: "user-role.delete", description: "Eliminar asignaciones de roles a usuarios"},
+
+      {id: 33, code: "role-permissions.read", description: "Leer permisos de roles"},
+      {id: 34, code: "role-permissions.create", description: "Crear permisos de roles"},
+      {id: 35, code: "role-permissions.update", description: "Actualizar permisos de roles"},
+      {id: 36, code: "role-permissions.delete", description: "Eliminar permisos de roles"},
+
+      {id: 37, code: "kit-components.read", description: "Leer componentes del kit"},
+      {id: 38, code: "kit-components.create", description: "Crear componentes del kit"},
+      {id: 39, code: "kit-components.update", description: "Actualizar componentes del kit"},
+      {id: 40, code: "kit-components.delete", description: "Eliminar componentes del kit"},
+
+      {id: 41, code: "article-image.read", description: "Leer imágenes de artículos"},
+      {id: 42, code: "article-image.create", description: "Crear imágenes de artículos"},
+      {id: 43, code: "article-image.update", description: "Actualizar imágenes de artículos"},
+      {id: 44, code: "article-image.delete", description: "Eliminar imágenes de artículos"},
+
+      {id: 45, code: "invitations.read", description: "Leer invitaciones"},
+      {id: 46, code: "invitations.create", description: "Crear invitaciones"},
+      {id: 47, code: "invitations.update", description: "Actualizar invitaciones"},
+      {id: 48, code: "invitations.delete", description: "Eliminar invitaciones"},
+
+      {id: 49, code: "stock-movements.read", description: "Leer movimientos de stock"},
+      {id: 50, code: "stock-movements.create", description: "Crear movimientos de stock"},
+      {id: 51, code: "stock-movements.update", description: "Actualizar movimientos de stock"},
+      {id: 52, code: "stock-movements.delete", description: "Eliminar movimientos de stock"}
+
     ]);
 
     // Ajustar el autoincremento en PostgreSQL

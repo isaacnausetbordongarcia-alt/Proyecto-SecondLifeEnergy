@@ -1,14 +1,18 @@
 import { Router } from "express";
 import { SimulationArticlesController } from "./simulation-article.controller.js";
+import { bearerAuth } from "../../middlewares/bearer-auth.middleware.js";
+import { authorize } from "../rcba/authorize.middleware.js";
 
 const router = Router();
 
-router.get("/", SimulationArticlesController.getAll);
+router.use(bearerAuth);
 
-router.get("/:simulationId/:articleId", SimulationArticlesController.FindById);
+router.get("/", authorize("simulation-article:read"), SimulationArticlesController.getAll);
 
-router.post("/", SimulationArticlesController.create);
+router.get("/:simulationId/:articleId", authorize("simulation-article:read"), SimulationArticlesController.FindById);
 
-router.delete("/:simulationId/:articleId", SimulationArticlesController.delete);
+router.post("/", authorize("simulation-article:create"), SimulationArticlesController.create);
+
+router.delete("/:simulationId/:articleId", authorize("simulation-article:delete"), SimulationArticlesController.delete);
 
 export default router;

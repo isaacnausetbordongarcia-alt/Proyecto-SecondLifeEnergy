@@ -1,16 +1,20 @@
 import { Router } from "express";
 import { ForumCategoryController } from "./forum-category.controller.js";
+import { bearerAuth } from "../../middlewares/bearer-auth.middleware.js";
+import { authorize } from "../rcba/authorize.middleware.js";
 
 const router = Router();
 
-router.get("/", ForumCategoryController.getAll);
+router.use(bearerAuth);
 
-router.get("/:id", ForumCategoryController.getById);
+router.get("/", authorize("forum-category:read"), ForumCategoryController.getAll);
 
-router.post("/", ForumCategoryController.create);
+router.get("/:id", authorize("forum-category:read"), ForumCategoryController.getById);
 
-router.put("/:id", ForumCategoryController.update);
+router.post("/", authorize("forum-category:create"), ForumCategoryController.create);
 
-router.delete("/:id", ForumCategoryController.delete);
+router.put("/:id", authorize("forum-category:update"), ForumCategoryController.update);
+
+router.delete("/:id", authorize("forum-category:delete"), ForumCategoryController.delete);
 
 export default router;
