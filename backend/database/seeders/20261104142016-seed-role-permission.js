@@ -55,8 +55,6 @@ module.exports = {
       { role_id: 1, permission_id: 49 },
       { role_id: 1, permission_id: 50 },
       { role_id: 1, permission_id: 51 },
-      { role_id: 1, permission_id: 52 },
-      { role_id: 1, permission_id: 51 },
       { role_Id: 1, permission_id: 52 },
       //article permissions
       { role_id: 1, permission_id: 53 },
@@ -128,6 +126,279 @@ module.exports = {
       { role_id: 1, permission_id: 102 },
       { role_id: 1, permission_id: 103 },
       { role_id: 1, permission_id: 104 },
+
+      // ===== Teacher (role_id: 2) =====
+      // tags
+      { role_id: 2, permission_id: 17 },
+      { role_id: 2, permission_id: 18 },
+      { role_id: 2, permission_id: 19 },
+      { role_id: 2, permission_id: 20 },
+
+      // simulations
+      { role_id: 2, permission_id: 21 },
+      { role_id: 2, permission_id: 22 },
+      { role_id: 2, permission_id: 24 },
+
+      // forumcategories
+      { role_id: 2, permission_id: 25 },
+
+      // kit-components
+      { role_id: 2, permission_id: 37 },
+      { role_id: 2, permission_id: 38 },
+      { role_id: 2, permission_id: 39 },
+
+      // article-image
+      { role_id: 2, permission_id: 41 },
+
+      // invitations
+      { role_id: 2, permission_id: 45 },
+      { role_id: 2, permission_id: 46 },
+      { role_id: 2, permission_id: 48 },
+
+      // article
+      { role_id: 2, permission_id: 53 },
+      { role_id: 2, permission_id: 54 },
+      { role_id: 2, permission_id: 55 },
+      { role_id: 2, permission_id: 56 },
+
+      // request-item
+      { role_id: 2, permission_id: 57 },
+      { role_id: 2, permission_id: 58 },
+      { role_id: 2, permission_id: 59 },
+      { role_id: 2, permission_id: 60 },
+
+      // resource-tag
+      { role_id: 2, permission_id: 61 },
+      { role_id: 2, permission_id: 62 },
+
+      // article-resource
+      { role_id: 2, permission_id: 65 },
+      { role_id: 2, permission_id: 66 },
+
+      // simulation-article
+      { role_id: 2, permission_id: 73 },
+      { role_id: 2, permission_id: 74 },
+
+      // resource
+      { role_id: 2, permission_id: 77 },
+      { role_id: 2, permission_id: 78 },
+      { role_id: 2, permission_id: 79 },
+
+      // question
+      { role_id: 2, permission_id: 81 },
+      { role_id: 2, permission_id: 82 },
+      { role_id: 2, permission_id: 83 },
+      { role_id: 2, permission_id: 84 },
+
+      // answer
+      { role_id: 2, permission_id: 85 },
+      { role_id: 2, permission_id: 86 },
+      { role_id: 2, permission_id: 87 },
+      { role_id: 2, permission_id: 88 },
+
+      // simulation_resource
+      { role_id: 2, permission_id: 89 },
+      { role_id: 2, permission_id: 90 },
+      { role_id: 2, permission_id: 91 },
+      { role_id: 2, permission_id: 92 },
+
+      // article_category
+      { role_id: 2, permission_id: 93 },
+      { role_id: 2, permission_id: 94 },
+      { role_id: 2, permission_id: 95 },
+      { role_id: 2, permission_id: 96 },
+      
+      // article_review
+      { role_id: 2, permission_id: 97 },
+      { role_id: 2, permission_id: 98 },
+      { role_id: 2, permission_id: 99 },
+      { role_id: 2, permission_id: 100 },
+ 
+      // ===== Client (role_id: 3) =====
+      // tags
+      { role_id: 3, permission_id: 17 },
+      { role_id: 3, permission_id: 18 },
+      { role_id: 3, permission_id: 19 },
+      { role_id: 3, permission_id: 20 },
+
+      // simulations
+      { role_id: 3, permission_id: 21 },
+      { role_id: 3, permission_id: 22 },
+      { role_id: 3, permission_id: 24 },
+
+      // forumcategories
+      { role_id: 3, permission_id: 25 },
+
+      // kit-components
+      { role_id: 3, permission_id: 37 },
+
+      // article-image
+      { role_id: 3, permission_id: 41 },
+
+      // article
+      { role_id: 3, permission_id: 53 },
+      { role_id: 3, permission_id: 54 },
+
+      // request-item
+      { role_id: 3, permission_id: 57 },
+      { role_id: 3, permission_id: 58 },
+      { role_id: 3, permission_id: 59 },
+      { role_id: 3, permission_id: 60 },
+
+      // resource-tag
+      { role_id: 3, permission_id: 61 },
+      { role_id: 3, permission_id: 62 },
+
+      // article-resource
+      { role_id: 3, permission_id: 65 },
+
+      // simulation-article
+      { role_id: 3, permission_id: 73 },
+
+      // resource
+      { role_id: 3, permission_id: 77 },
+
+      // question
+      { role_id: 3, permission_id: 81 },
+      { role_id: 3, permission_id: 82 },
+      { role_id: 3, permission_id: 83 },
+      { role_id: 3, permission_id: 84 },
+
+      // answer
+      { role_id: 3, permission_id: 85 },
+      { role_id: 3, permission_id: 86 },
+      { role_id: 3, permission_id: 87 },
+      { role_id: 3, permission_id: 88 },
+
+      // simulation_resource
+      { role_id: 3, permission_id: 89 },
+
+      // article_category
+      { role_id: 3, permission_id: 93 },
+
+      // article_review
+      { role_id: 3, permission_id: 97 },
+
+ 
+      // ===== Guest (role_id: 4) =====
+      // tags
+      { role_id: 4, permission_id: 17 },
+
+      // simulations
+      { role_id: 4, permission_id: 21 },
+      { role_id: 4, permission_id: 22 },
+      { role_id: 4, permission_id: 24 },
+
+      // forumcategories
+      { role_id: 4, permission_id: 25 },
+
+      // kit-components
+      { role_id: 4, permission_id: 37 },
+
+      // article-image
+      { role_id: 4, permission_id: 41 },
+
+      // article
+      { role_id: 4, permission_id: 53 },
+
+      // resource-tag
+      { role_id: 4, permission_id: 61 },
+
+      // article-resource
+      { role_id: 4, permission_id: 65 },
+
+      // simulation-article
+      { role_id: 4, permission_id: 73 },
+
+      // resource
+      { role_id: 4, permission_id: 77 },
+
+      // question
+      { role_id: 4, permission_id: 81 },
+      { role_id: 4, permission_id: 82 },
+      { role_id: 4, permission_id: 83 },
+      { role_id: 4, permission_id: 84 },
+
+      // answer
+      { role_id: 4, permission_id: 85 },
+      { role_id: 4, permission_id: 86 },
+      { role_id: 4, permission_id: 87 },
+      { role_id: 4, permission_id: 88 },
+
+      // simulation_resource
+      { role_id: 4, permission_id: 89 },
+      
+      // article_category
+      { role_id: 4, permission_id: 93 },
+
+      // article_review
+      { role_id: 4, permission_id: 97 },
+ 
+      // ===== Student (role_id: 5) =====
+      // tags
+      { role_id: 5, permission_id: 17 },
+      { role_id: 5, permission_id: 18 },
+      { role_id: 5, permission_id: 19 },
+      { role_id: 5, permission_id: 20 },
+
+      // simulations
+      { role_id: 5, permission_id: 21 },
+      { role_id: 5, permission_id: 22 },
+      { role_id: 5, permission_id: 24 },
+
+      // forumcategories
+      { role_id: 5, permission_id: 25 },
+
+      // kit-components
+      { role_id: 5, permission_id: 37 },
+
+      // article-image
+      { role_id: 5, permission_id: 41 },
+
+      // article
+      { role_id: 5, permission_id: 53 },
+      { role_id: 5, permission_id: 54 },
+
+      // request-item
+      { role_id: 5, permission_id: 57 },
+      { role_id: 5, permission_id: 58 },
+      { role_id: 5, permission_id: 59 },
+      { role_id: 5, permission_id: 60 },
+
+      // resource-tag
+      { role_id: 5, permission_id: 61 },
+      { role_id: 5, permission_id: 62 },
+
+      // article-resource
+      { role_id: 5, permission_id: 65 },
+
+      // simulation-article
+      { role_id: 5, permission_id: 73 },
+
+      // resource
+      { role_id: 5, permission_id: 77 },
+
+      // question
+      { role_id: 5, permission_id: 81 },
+      { role_id: 5, permission_id: 82 },
+      { role_id: 5, permission_id: 83 },
+      { role_id: 5, permission_id: 84 },
+
+      // answer
+      { role_id: 5, permission_id: 85 },
+      { role_id: 5, permission_id: 86 },
+      { role_id: 5, permission_id: 87 },
+      { role_id: 5, permission_id: 88 },
+
+      // simulation_resource
+      { role_id: 5, permission_id: 89 },
+
+      // article_category
+      { role_id: 5, permission_id: 93 },
+
+      // article_review
+      { role_id: 5, permission_id: 97 },
+      
     ]);
   },
 
