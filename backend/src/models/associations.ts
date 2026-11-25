@@ -241,10 +241,4 @@ export function defineAssociations() {
     StockMovement.belongsTo(Article, { foreignKey: "articleId", as: "article" });
     User.hasMany(StockMovement, { foreignKey: "userId", as: "stockMovements" });
     StockMovement.belongsTo(User, { foreignKey: "userId", as: "user" });
-
-    User.belongsToMany(Role, { through: UserRole, foreignKey: "userId", otherKey: "roleId", as: "roles" });
-    Role.belongsToMany(User, { through: UserRole, foreignKey: "roleId", otherKey: "userId", as: "users" });
-
-    Role.belongsToMany(Permission, { through: RolePermission, foreignKey: "roleId", otherKey: "permissionId", as: "permissions" });
-    Permission.belongsToMany(Role, { through: RolePermission, foreignKey: "permissionId", otherKey: "roleId", as: "roles" });
 }

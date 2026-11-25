@@ -7,7 +7,7 @@ if (!["development", "test", "production"].includes(NODE_ENV)) {
 
 
 const ENV_FILES: Record<string, string> = {
-  development: ".env.develop",
+  development: ".env.develop.example",
   test: ".env.testing",
 };
 
@@ -19,7 +19,8 @@ if (NODE_ENV !== "production") {
 
 export const env = {
   PORT: Number(process.env.PORT) || 3000,
-
+  JWT_SECRET: process.env.JWT_SECRET,
+  JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN,
   DB_DIALECT: process.env.DB_DIALECT || "postgres",
   DB_HOST: process.env.DB_HOST || "localhost",
   DB_PORT: Number(process.env.DB_PORT) || 5432,

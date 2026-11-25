@@ -9,12 +9,12 @@ import { UserRole } from "../rcba/userRole.model.js";
 export class AuthService {
 
   static async validateCredentials(
-    username: string,
+    email: string,
     password: string
   ): Promise<User | null> {
 
     const user = await User.findOne({
-      where: { name: username }
+      where: { email: email },
     });
 
     if (!user) {
@@ -34,26 +34,27 @@ export class AuthService {
   }
 
   static async register(
-    username: string,
+    name: string,
+    email: string,
     password: string
   ): Promise<User> {
     return sequelize.transaction(async (transaction) => {
-      const existingUser = await User.findOne({ where: { name: username }, transaction });
+      const existingUser = await User.findOne({ where: { email }, transaction });
 
       if (existingUser) throw new Error("USERNAME_ALREADY_EXISTS");
 
       const passwordHash = await bcrypt.hash(password, 12);
 
-      const customerRole = await Role.findOne({
-        where: { name: "CUSTOMER" },
+      const studentRole = await Role.findOne({
+        where: { name: "alumno" },
         transaction
       });
 
-      if (!customerRole) throw new Error("CUSTOMER role not found");
+      if (!studentRole) throw new Error("alumno role not found");
 
-      const user = await User.create({name: username, passwordHash, email: ""}, { transaction });
+      const user = await User.create({name: name, passwordHash, email: email}, { transaction });
 
-      await UserRole.create({ userId: user.id, roleId: customerRole.id }, { transaction });
+      await UserRole.create({ userId: user.id, roleId: studentRole.id }, { transaction });
 
       return user;
     });
@@ -67,8 +68,8 @@ export class AuthService {
       algorithm: "HS256",
       subject: String(userId),
       expiresIn: "1h",
-      issuer: "bicycle-shop-api",
-      audience: "bicycle-shop-client"
+      issuer: "secondlifeenergy-api",
+      audience: "secondlifeenergy-client"
     });
 
     return token;
