@@ -105,7 +105,44 @@ module.exports = {
 {id: 77, code: "resource:read", description: "Leer recursos"},
 {id: 78, code: "resource:create", description: "Crear recursos"},
 {id: 79, code: "resource:update", description: "Actualizar recursos"},
-{id: 80, code: "resource:delete", description: "Eliminar recursos"}
+{id: 80, code: "resource:delete", description: "Eliminar recursos"},
+
+// Question
+{id: 81, code: "question:read", description: "Leer preguntas"},
+{id: 82, code: "question:create", description: "Crear preguntas"},
+{id: 83, code: "question:update", description: "Actualizar preguntas"},
+{id: 84, code: "question:delete", description: "Eliminar preguntas"},
+
+// Answer
+{id: 85, code: "answer:read", description: "Leer respuestas"},
+{id: 86, code: "answer:create", description: "Crear respuestas"},
+{id: 87, code: "answer:update", description: "Actualizar respuestas"},
+{id: 88, code: "answer:delete", description: "Eliminar respuestas"},
+
+// SimulationResource
+{id: 89, code: "simulation_resource:read", description: "Leer recursos de simulación"},
+{id: 90, code: "simulation_resource:create", description: "Crear recursos de simulación"},
+{id: 91, code: "simulation_resource:update", description: "Actualizar recursos de simulación"},
+{id: 92, code: "simulation_resource:delete", description: "Eliminar recursos de simulación"},
+
+// ArticleCategory
+{id: 93, code: "article_category:read", description: "Leer categorías de artículos"},
+{id: 94, code: "article_category:create", description: "Crear categorías de artículos"},
+{id: 95, code: "article_category:update", description: "Actualizar categorías de artículos"},
+{id: 96, code: "article_category:delete", description: "Eliminar categorías de artículos"},
+
+// ArticleReview
+{id: 97, code: "article_review:read", description: "Leer reseñas de artículos"},
+{id: 98, code: "article_review:create", description: "Crear reseñas de artículos"},
+{id: 99, code: "article_review:update", description: "Actualizar reseñas de artículos"},
+{id: 100, code: "article_review:delete", description: "Eliminar reseñas de artículos"},
+
+// Moderation
+{id: 101, code: "moderation:read", description: "Leer moderaciones"},
+{id: 102, code: "moderation:create", description: "Crear moderaciones"},
+{id: 103, code: "moderation:update", description: "Actualizar moderaciones"},
+{id: 104, code: "moderation:delete", description: "Eliminar moderaciones"}
+
 
 
 
