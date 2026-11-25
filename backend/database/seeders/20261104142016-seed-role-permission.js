@@ -56,6 +56,11 @@ module.exports = {
       { role_id: 1, permission_id: 50 },
       { role_id: 1, permission_Id: 51 },
       { role_Id: 1, permission_Id: 52 },
+      //article permissions
+      { role_id: 1, permission_id: 53 },
+      { role_id: 1, permission_id: 54 },
+      { role_id: 1, permission_id: 55 },
+      { role_id: 1, permission_id: 56 },
     ]);
   },
 
