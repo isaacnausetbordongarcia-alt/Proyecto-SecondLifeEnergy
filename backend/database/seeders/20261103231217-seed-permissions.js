@@ -72,10 +72,40 @@ module.exports = {
 
 
       //article permissions
-      { id: 53, code: "articles.read", description: "Leer artículos" },
-      { id: 54, code: "articles.create", description: "Crear artículos" },
-      { id: 55, code: "articles.update", description: "Actualizar artículos" },
-      { id: 56, code: "articles.delete", description: "Eliminar artículos" },
+{id: 53, code: "article:read", description: "Leer artículos"},
+{id: 54, code: "article:create", description: "Crear artículos"},
+{id: 55, code: "article:update", description: "Actualizar artículos"},
+{id: 56, code: "article:delete", description: "Eliminar artículos"},
+      //request-item permissions
+{id: 57, code: "request-item:read", description: "Leer ítems de solicitud"},
+{id: 58, code: "request-item:create", description: "Crear ítems de solicitud"},
+{id: 59, code: "request-item:update", description: "Actualizar ítems de solicitud"},
+{id: 60, code: "request-item:delete", description: "Eliminar ítems de solicitud"},
+      //resource-tag permissions
+{id: 61, code: "resource-tag:read", description: "Leer etiquetas de recursos"},
+{id: 62, code: "resource-tag:create", description: "Asignar etiquetas a recursos"},
+{id: 63, code: "resource-tag:update", description: "Actualizar etiquetas de recursos"},
+{id: 64, code: "resource-tag:delete", description: "Quitar etiquetas de recursos"},
+      //article-resource permissions
+{id: 65, code: "article-resource:read", description: "Leer recursos de artículos"},
+{id: 66, code: "article-resource:create", description: "Asignar recursos a artículos"},
+{id: 67, code: "article-resource:update", description: "Actualizar recursos de artículos"},
+{id: 68, code: "article-resource:delete", description: "Quitar recursos de artículos"},
+      //audit-log permissions
+{id: 69, code: "audit-log:read", description: "Leer registros de auditoría"},
+{id: 70, code: "audit-log:create", description: "Crear registros de auditoría"},
+{id: 71, code: "audit-log:update", description: "Actualizar registros de auditoría"},
+{id: 72, code: "audit-log:delete", description: "Eliminar registros de auditoría"},
+      //simulation-article permissions
+{id: 73, code: "simulation-article:read", description: "Leer artículos de simulaciones"},
+{id: 74, code: "simulation-article:create", description: "Asignar artículos a simulaciones"},
+{id: 75, code: "simulation-article:update", description: "Actualizar artículos de simulaciones"},
+{id: 76, code: "simulation-article:delete", description: "Quitar artículos de simulaciones"},
+      //resource permissions
+{id: 77, code: "resource:read", description: "Leer recursos"},
+{id: 78, code: "resource:create", description: "Crear recursos"},
+{id: 79, code: "resource:update", description: "Actualizar recursos"},
+{id: 80, code: "resource:delete", description: "Eliminar recursos"}
 
 
 

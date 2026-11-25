@@ -61,6 +61,36 @@ module.exports = {
       { role_id: 1, permission_id: 54 },
       { role_id: 1, permission_id: 55 },
       { role_id: 1, permission_id: 56 },
+      //request-item permissions
+      { role_id: 1, permission_id: 57 },
+      { role_id: 1, permission_id: 58 },
+      { role_id: 1, permission_id: 59 },
+      { role_id: 1, permission_id: 60 },
+      //resource-tag permissions
+      { role_id: 1, permission_id: 61 },
+      { role_id: 1, permission_id: 62 },
+      { role_id: 1, permission_id: 63 },
+      { role_id: 1, permission_id: 64 },
+      //article-resource permissions
+      { role_id: 1, permission_id: 65 },
+      { role_id: 1, permission_id: 66 },
+      { role_id: 1, permission_id: 67 },
+      { role_id: 1, permission_id: 68 },
+      //audit-log permissions
+      { role_id: 1, permission_id: 69 },
+      { role_id: 1, permission_id: 70 },
+      { role_id: 1, permission_id: 71 },
+      { role_id: 1, permission_id: 72 },
+      //simulation-article permissions
+      { role_id: 1, permission_id: 73 },
+      { role_id: 1, permission_id: 74 },
+      { role_id: 1, permission_id: 75 },
+      { role_id: 1, permission_id: 76 },
+      //resource permissions
+      { role_id: 1, permission_id: 77 },
+      { role_id: 1, permission_id: 78 },
+      { role_id: 1, permission_id: 79 },
+      { role_id: 1, permission_id: 80 },
     ]);
   },
 
