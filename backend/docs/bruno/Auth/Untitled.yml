@@ -1,12 +1,15 @@
 info:
-  name: http://localhost:3000/api/audit-logs
+  name: Untitled
   type: http
   seq: 1
 
 http:
-  method: GET
-  url: http://localhost:3000/api/audit-logs
-  auth: inherit
+  method: POST
+  url: http://localhost:3000/api/auth/login
+  auth:
+    type: basic
+    username: Admin
+    password: hash-pendiente-admin
 
 settings:
   encodeUrl: true

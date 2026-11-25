@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { User } from "../modules/auth/user.model.js";
+import { env } from "../config/env.js";
 
 export async function bearerAuth(req: Request, res: Response, next: NextFunction): Promise<void> {
 
@@ -11,7 +12,7 @@ export async function bearerAuth(req: Request, res: Response, next: NextFunction
     }
 
     const token = authorization.split(" ")[1];
-    const secret = process.env.JWT_SECRET;
+    const secret = env.JWT_SECRET;
     if (!secret) {
         next(new Error("JWT_SECRET not configured"));
         return;
@@ -20,8 +21,8 @@ export async function bearerAuth(req: Request, res: Response, next: NextFunction
     try {
         const decoded = jwt.verify(token, secret, {
             algorithms: ["HS256"],
-            issuer: "bicycle-shop-api",
-            audience: "bicycle-shop-client"
+            issuer: "secondlifeenergy-api",
+            audience: "secondlifeenergy-client"
         }
         );
 
