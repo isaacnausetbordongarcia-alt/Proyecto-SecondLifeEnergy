@@ -34,7 +34,11 @@ module.exports = {
       { role_id: 1, permission_id: 28 },
 
 
-      
+      //article permissions
+      { role_id: 1, permission_id: 53 },
+      { role_id: 1, permission_id: 54 },
+      { role_id: 1, permission_id: 55 },
+      { role_id: 1, permission_id: 56 },
 
 
 
