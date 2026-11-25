@@ -1,16 +1,20 @@
 import { Router } from "express";
 import { KitComponentController } from "./kitComponent.controller.js";
+import { bearerAuth } from "../../middlewares/bearer-auth.middleware.js";
+import { authorize } from "../rcba/authorize.middleware.js";
 
 const router = Router();
 
-router.get("/", KitComponentController.getAll);
+router.use(bearerAuth);
 
-router.get("/:kitId/:componentId", KitComponentController.getById);
+router.get("/", authorize("kit-component:read"), KitComponentController.getAll);
 
-router.post("/", KitComponentController.create);
+router.get("/:kitId/:componentId", authorize("kit-component:read"), KitComponentController.getById);
 
-router.put("/:kitId/:componentId", KitComponentController.update);
+router.post("/", authorize("kit-component:create"), KitComponentController.create);
 
-router.delete("/:kitId/:componentId", KitComponentController.delete);
+router.put("/:kitId/:componentId", authorize("kit-component:update"), KitComponentController.update);
+
+router.delete("/:kitId/:componentId", authorize("kit-component:delete"), KitComponentController.delete);
 
 export default router;

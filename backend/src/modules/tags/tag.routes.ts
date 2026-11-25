@@ -1,16 +1,20 @@
 import { Router } from "express";
 import { TagController } from "./tag.controller.js";
+import { bearerAuth } from "../../middlewares/bearer-auth.middleware.js";
+import { authorize } from "../rcba/authorize.middleware.js";
 
 const router = Router();
 
-router.get("/", TagController.getAll);
+router.use(bearerAuth);
 
-router.get("/:id", TagController.getById);
+router.get("/", authorize("tag:read"), TagController.getAll);
 
-router.post("/", TagController.create);
+router.get("/:id", authorize("tag:read"), TagController.getById);
 
-router.put("/:id", TagController.update);
+router.post("/", authorize("tag:create"), TagController.create);
 
-router.delete("/:id", TagController.delete);
+router.put("/:id", authorize("tag:update"), TagController.update);
+
+router.delete("/:id", authorize("tag:delete"), TagController.delete);
 
 export default router;

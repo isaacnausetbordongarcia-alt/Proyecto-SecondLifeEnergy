@@ -3,8 +3,8 @@ import { User } from "./user.model.js";
 import jwt from "jsonwebtoken";
 import { env } from "../../config/env.js";
 import { sequelize } from "../../config/database.js";
-import { Role } from "../rbac/role.model.js";
-import { UserRole } from "../rbac/user-role.model.js";
+import { Role } from "../rcba/role.model.js";
+import { UserRole } from "../rcba/userRole.model.js";
 
 export class AuthService {
 
@@ -14,7 +14,7 @@ export class AuthService {
   ): Promise<User | null> {
 
     const user = await User.findOne({
-      where: { username }
+      where: { name: username }
     });
 
     if (!user) {
@@ -38,7 +38,7 @@ export class AuthService {
     password: string
   ): Promise<User> {
     return sequelize.transaction(async (transaction) => {
-      const existingUser = await User.findOne({ where: { username }, transaction });
+      const existingUser = await User.findOne({ where: { name: username }, transaction });
 
       if (existingUser) throw new Error("USERNAME_ALREADY_EXISTS");
 
@@ -51,7 +51,7 @@ export class AuthService {
 
       if (!customerRole) throw new Error("CUSTOMER role not found");
 
-      const user = await User.create({ username, passwordHash }, { transaction });
+      const user = await User.create({name: username, passwordHash, email: ""}, { transaction });
 
       await UserRole.create({ userId: user.id, roleId: customerRole.id }, { transaction });
 

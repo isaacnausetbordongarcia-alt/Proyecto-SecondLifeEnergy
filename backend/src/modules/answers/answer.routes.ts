@@ -1,18 +1,22 @@
 import { Router } from "express";
 import { AnswerController } from "./answer.controller.js";
+import { bearerAuth } from "../../middlewares/bearer-auth.middleware.js";
+import { authorize } from "../rcba/authorize.middleware.js";
 
 const router = Router();
 
-router.get("/", AnswerController.getAll);
+router.use(bearerAuth);
 
-router.get("/eagerly/:id", AnswerController.getEagerlyById);
+router.get("/", authorize("answer:read"), AnswerController.getAll);
 
-router.get("/:id", AnswerController.getById);
+router.get("/eagerly/:id", authorize("answer:read"), AnswerController.getEagerlyById);
 
-router.post("/", AnswerController.create);
+router.get("/:id", authorize("answer:read"), AnswerController.getById);
 
-router.put("/:id", AnswerController.update);
+router.post("/", authorize("answer:create"), AnswerController.create);
 
-router.delete("/:id", AnswerController.delete);
+router.put("/:id", authorize("answer:update"), AnswerController.update);
+
+router.delete("/:id", authorize("answer:delete"), AnswerController.delete);
 
 export default router;

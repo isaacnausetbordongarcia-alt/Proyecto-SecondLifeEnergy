@@ -1,18 +1,22 @@
 import { Router } from "express";
 import { ArticleCategoryController } from "./article-category.controller.js";
+import { bearerAuth } from "../../middlewares/bearer-auth.middleware.js";
+import { authorize } from "../rcba/authorize.middleware.js";
 
 const router = Router();
 
-router.get("/", ArticleCategoryController.getAll);
+router.use(bearerAuth);
 
-router.get("/eagerly/:id", ArticleCategoryController.getEagerlyById);
+router.get("/", authorize("article-category:read"), ArticleCategoryController.getAll);
 
-router.get("/:id", ArticleCategoryController.getById);
+router.get("/eagerly/:id", authorize("article-category:read"), ArticleCategoryController.getEagerlyById);
 
-router.post("/", ArticleCategoryController.create);
+router.get("/:id", authorize("article-category:read"), ArticleCategoryController.getById);
 
-router.put("/:id", ArticleCategoryController.update);
+router.post("/", authorize("article-category:create"), ArticleCategoryController.create);
 
-router.delete("/:id", ArticleCategoryController.delete);
+router.put("/:id", authorize("article-category:update"), ArticleCategoryController.update);
+
+router.delete("/:id", authorize("article-category:delete"), ArticleCategoryController.delete);
 
 export default router;
