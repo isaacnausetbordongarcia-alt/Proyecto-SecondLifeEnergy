@@ -4,11 +4,11 @@
 module.exports = {
   async up(queryInterface) {
     await queryInterface.bulkInsert("roles", [
-      { id: 1, name: "admin", description: "Acceso total a la plataforma" },
-      { id: 2, name: "docente", description: "Gestiona alumnos y recursos educativos" },
-      { id: 3, name: "invitado", description: "Usuario no registrado" },
-      { id: 4, name: "cliente", description: "Usuario registrado" },
-      { id: 5, name: "alumno", description: "Usuario registrado por invitación" }
+      { id: 1, name: "ADMIN", description: "Total access to the platform" },
+      { id: 2, name: "TEACHER", description: "Manages students and educational resources" },
+      { id: 3, name: "CLIENT", description: "Registered user" },
+      { id: 4, name: "GUEST", description: "Unregistered user" },
+      { id: 5, name: "STUDENT", description: "Registered user by invitation" }
     ]);
 
     // Ajustar el autoincremento en PostgreSQL
