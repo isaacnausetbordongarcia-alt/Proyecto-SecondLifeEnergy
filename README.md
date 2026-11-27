@@ -15,7 +15,9 @@ API REST del proyecto **Second Life Energy**: plataforma con gestión de usuario
 | Base de datos | PostgreSQL (`pg`, `pg-hstore`); MySQL soportado con `mysql2` |
 | Migraciones y seeders | `sequelize-cli` |
 | Dev tooling | `tsx`, `cross-env` |
+| Autenticación (Sprint 2) | JWT, con autorización comprobada en el servidor |
 | Documentación de la API | Colección de Bruno (`backend/docs/bruno`) |
+| Frontend (ver [guía](#guía-del-frontend)) | React + TypeScript + Vite, Tailwind CSS v4 + Headless UI |
 
 ---
 
@@ -113,6 +115,8 @@ DB_PASSWORD=tu-contraseña
 | `DB_NAME` | `secondlifeenergy` |
 | `DB_USER` | `root` |
 | `DB_PASSWORD` | `1234` |
+
+> Los secretos (contraseñas, claves JWT) nunca se suben al repositorio: solo `.env.example` con valores de ejemplo.
 
 ---
 
@@ -304,6 +308,131 @@ En `backend/docs/bruno/` hay una colección (`SecondLifeEnergy`) con peticiones 
 
 ---
 
+## Roles y permisos
+
+Los permisos se comprueban **en el backend** (middleware de autorización sobre cada endpoint según el rol del token JWT); la interfaz solo oculta opciones, nunca sustituye esa comprobación. El destinatario de una invitación no elige su propio rol.
+
+### Roles
+
+| Rol (documento de requisitos) | Descripción |
+|---|---|
+| Admin | Gestión global de usuarios, roles, permisos, solicitudes y contenidos |
+| Teacher / Docente / Manager | Profesorado invitado: gestiona sus recursos, revisa aportaciones e invita a su alumnado |
+| Customer | Alumnado o usuario invitado: participa en el foro y gestiona sus propias aportaciones |
+| Visitor | Visitante: lectura pública y simulaciones |
+
+> Los nombres de los roles varían entre las tablas del documento (`Teacher`, `Docente`, `Manager`). Deben unificarse con los de `seed-roles` (`admin`, `technician`, `moderator`, `user`) antes de asignar permisos en `seed-role-permission`.
+
+Leyenda: ✅ permitido · ❌ denegado · ✅* permitido **solo sobre lo propio** (ver notas) · — sin definir en el documento.
+
+### Usuarios y acceso
+
+| Recurso | Operación | Admin | Teacher | Customer | Visitor |
+|---|---|:-:|:-:|:-:|:-:|
+| `User` | create / update / delete | ✅ | ❌ | ❌ | ❌ |
+| `Role` | manage | ✅ | ❌ | ❌ | ❌ |
+| `Permission` | manage | ✅ | ❌ | ❌ | ❌ |
+| `UserRole` | read / create / update / delete | ✅ | ❌ | ❌ | ❌ |
+| `RolePermission` | read / create / update / delete | ✅ | ❌ | ❌ | ❌ |
+| `Invitation` | read | ✅ | ❌ ¹ | ❌ | ❌ |
+| `Invitation` | create | ✅ | ✅* | ❌ | ❌ |
+| `Invitation` | update | ✅ | ❌ | ❌ | ❌ |
+| `Invitation` | delete | ✅ | ✅* | ❌ | ❌ |
+| `Invitation` | createTeacher | ✅ | ❌ | ❌ | ❌ |
+| `Invitation` | createStudent | ✅ | ✅* | ❌ | ❌ |
+
+¹ Las tablas del documento no coinciden: la tabla de la Épica 4 (HU-06) deja la lectura solo para administración, mientras que la de la Épica 1 y la de `Sergio` dan lectura también al docente. Aquí se aplica la Épica 4; confirmar con el equipo.
+
+### Catálogo y stock
+
+| Recurso | Operación | Admin | Teacher | Customer | Visitor |
+|---|---|:-:|:-:|:-:|:-:|
+| `Article` | read | ✅ | ✅ | ✅ | ✅ |
+| `Article` | create | ✅ | ✅ | ✅ | ❌ |
+| `Article` | update / delete | ✅ | ✅ | ❌ | ❌ |
+| `ArticleImage` | read | ✅ | ✅ | ✅ | ✅ |
+| `ArticleImage` | create / update / delete | ✅ | ❌ | ❌ | ❌ |
+| `KitComponent` | read | ✅ | ✅ | ✅ | ✅ |
+| `KitComponent` | create / update | ✅ | ✅ | ❌ | ❌ |
+| `KitComponent` | delete | ✅ | ❌ | ❌ | ❌ |
+| `ArticleCategory` | read | ✅ | ✅ | ✅ | — |
+| `ArticleCategory` | create / update / delete | ✅ | ✅* | ❌ | — |
+| `ArticleReview` | read | ✅ | ✅ | ✅ | — |
+| `ArticleReview` | create / update / delete | ✅ | ✅* | ❌ | — |
+| `StockMovement` | read / create / update / delete | ✅ | ❌ | ❌ | ❌ |
+
+### Solicitudes
+
+| Recurso | Operación | Admin | Teacher | Customer | Visitor |
+|---|---|:-:|:-:|:-:|:-:|
+| `RequestItem` | read / update / delete | ✅ | ✅ | ✅* | — |
+| `RequestItem` | create | ✅ | ✅ | ✅ | — |
+
+### Recursos formativos
+
+| Recurso | Operación | Admin | Teacher | Customer | Visitor |
+|---|---|:-:|:-:|:-:|:-:|
+| `Resource` | read | ✅ | ✅ | ✅ | ✅ |
+| `Resource` | create / update | ✅ | ✅* | ❌ | ❌ |
+| `Resource` | delete | ✅ | ❌ | ❌ | ❌ |
+| `Tag` | read / create | ✅ | ✅ | ✅ | — |
+| `Tag` | update / delete | ✅ | ✅ | ✅* | — |
+| `ResourceTag` | read / create | ✅ | ✅ | ✅ | — |
+| `ResourceTag` | update / delete | ✅ | ❌ | ❌ | — |
+| `ArticleResource` | read | ✅ | ✅ | ✅ | — |
+| `ArticleResource` | create | ✅ | ✅ | ❌ | — |
+| `ArticleResource` | update / delete | ✅ | ❌ | ❌ | — |
+
+### Simulaciones
+
+| Recurso | Operación | Admin | Teacher | Customer | Visitor |
+|---|---|:-:|:-:|:-:|:-:|
+| `Simulation` | read / create / delete | ✅ | ✅ | ✅ | ✅ |
+| `Simulation` | payment (confirmar solicitud ficticia) | ✅ | ✅ | ✅ | ✅ |
+| `SimulationArticle` | read | ✅ | ✅ | ✅ | — |
+| `SimulationArticle` | create | ✅ | ✅ | ❌ | — |
+| `SimulationArticle` | update / delete | ✅ | ❌ | ❌ | — |
+| `SimulationResource` | read | ✅ | ✅ | ✅ | — |
+| `SimulationResource` | create / update / delete | ✅ | ✅* | ❌ | — |
+
+### Foro y moderación
+
+| Recurso | Operación | Admin | Teacher | Customer | Visitor |
+|---|---|:-:|:-:|:-:|:-:|
+| `Question` | read | ✅ | ✅ | ✅ | ✅ |
+| `Question` | create | ✅ | ✅ | ✅ | ✅ |
+| `Question` | update / delete | ✅ | ✅ | ✅* | ✅* |
+| `Answer` | read | ✅ | ✅ | ✅ | ✅ |
+| `Answer` | create | ✅ | ✅ | ✅ | ✅ |
+| `Answer` | update / delete | ✅ | ✅ | ✅* | ✅* |
+| `Moderation` | read / create / update / delete | ✅ | ❌ | ❌ | ❌ |
+
+### Auditoría
+
+| Recurso | Operación | Admin | Teacher | Customer | Visitor |
+|---|---|:-:|:-:|:-:|:-:|
+| `AuditLog` | read | ✅ | ❌ | ❌ | ❌ |
+| `AuditLog` | create / update / delete | ❌ | ❌ | ❌ | ❌ |
+
+> Los registros de auditoría los genera el sistema; nadie los crea, edita ni borra desde la API.
+
+### Notas sobre las restricciones `*`
+
+- **Invitaciones (docentes):** solo pueden invitar a sus propios alumnos, y solo crear y borrar sus propias invitaciones.
+- **Preguntas y respuestas (customer y visitor):** solo pueden actualizar o borrar sus propios comentarios.
+- **`RequestItem` (customer):** solo puede leer, actualizar y borrar los ítems de sus propias solicitudes.
+- **`Resource` (docente):** gestiona solo sus propios contenidos; la administración gestiona todos sin alterar la autoría.
+- **`Tag` (customer):** solo puede modificar o borrar las etiquetas que haya creado.
+- **Entidades marcadas con `*` en las tablas de `Haridian`** (`SimulationResource`, `ArticleCategory`, `ArticleReview`): el docente solo modifica o crea lo suyo.
+
+### Orden de prioridad al construir `seed-role-permission`
+
+1. Tablas por épica del documento (HU-03, HU-04, HU-06, HU-07, HU-09, HU-10).
+2. Tablas por persona (`Isaac`, `Sergio`, `Alberto`, `Haridian`) para lo que las épicas no cubran.
+3. Lo no definido (—) se deniega por defecto hasta confirmarlo.
+
+---
+
 ## Migraciones
 
 Gestionadas con `sequelize-cli`. La configuración está en `database/.sequelizerc` y `database/config.js` (entornos `development`, `test` y `production`; el historial de migraciones y seeders se guarda en la propia base de datos).
@@ -345,7 +474,7 @@ Ubicados en `database/seeders/`. Cargan datos de ejemplo con ids fijos y, en Pos
 | `seed-request-item` | `request_items` | Ítems de las solicitudes |
 | `seed-auditlog` | `audit_logs` | Registros de auditoría |
 | `seed-user-role` | `user_roles` | Asignación de roles a usuarios |
-| `seed-role-permission` | `role_permissions` | Asignación de permisos a roles |
+| `seed-role-permission` | `role_permissions` | Asignación de permisos a roles según la matriz de [Roles y permisos](#roles-y-permisos) |
 | `seed-kit-component` | `kit_components` | Composición de kits |
 | `seed-article-image` | `article_images` | Imágenes de artículos |
 | `seed-invitation` | `invitations` | Invitaciones de ejemplo |
@@ -373,3 +502,93 @@ npm run db:migrate
 npm run db:seed
 npm run dev
 ```
+
+---
+
+## Guía del frontend
+
+Cada equipo desarrolla su propio frontend, que consume esta API. Stack de referencia del proyecto:
+
+| Capa | Tecnología |
+|---|---|
+| Framework | React + TypeScript + Vite |
+| UI / componentes | Tailwind CSS v4 + Headless UI |
+| Prototipado | Figma |
+| Autenticación | JWT (la autorización real se verifica siempre en el servidor) |
+| Contenedores y despliegue | Docker + Docker Compose, IsardVDI con HTTPS vía Caddy |
+
+### Arranque (propuesta)
+
+```bash
+cd frontend
+npm install
+cp .env.example .env.local      # definir VITE_API_URL
+npm run dev                     # Vite en http://localhost:5173
+```
+
+```env
+VITE_API_URL=http://localhost:3000/api
+```
+
+La API debe tener CORS habilitado para el origen del frontend (`http://localhost:5173` en desarrollo).
+
+### Estructura sugerida
+
+```
+frontend/
+├── src/
+│   ├── api/            # Cliente HTTP y funciones por recurso (articles, resources, ...)
+│   ├── components/     # Componentes reutilizables (tarjetas, formularios, modales)
+│   ├── pages/          # Una página por ruta (inicio, catálogo, ficha, foro, ...)
+│   ├── hooks/          # Hooks propios (useAuth, useCart, ...)
+│   ├── context/        # Sesión y rol del usuario
+│   ├── types/          # Tipos TypeScript alineados con los modelos de la API
+│   └── main.tsx
+├── .env.example
+└── vite.config.ts
+```
+
+### Consumo de la API
+
+- Prefijo base `/api` y respuestas JSON; códigos `200`, `201`, `204`, `400`, `404` y `500` descritos en la sección [API](#api).
+- Las rutas con `eagerly` devuelven el recurso con sus relaciones; úsalas en fichas de detalle para evitar varias peticiones.
+- Cuando exista autenticación, enviar el token en cada petición protegida:
+
+  ```ts
+  fetch(`${import.meta.env.VITE_API_URL}/articles`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  ```
+
+- Un `403` o `401` debe llevar a la pantalla de acceso o mostrar un mensaje claro; no asumir nunca que ocultar un botón basta como seguridad.
+
+### Roles en la interfaz
+
+- Guardar el rol de la sesión en un contexto y usarlo para mostrar u ocultar acciones según la matriz de [Roles y permisos](#roles-y-permisos).
+- Las acciones marcadas con `*` (solo lo propio) deben comprobar además que el autor del contenido coincide con el usuario actual.
+- Sin registro público de perfiles internos: el acceso se hace por invitación y la persona invitada no elige su rol.
+
+### Requisitos por historia de usuario
+
+| HU | Qué debe cubrir el frontend |
+|---|---|
+| HU-02 | Inicio con presentación, kits, recursos y accesos a foro y simuladores; menú y pie usables en móvil y escritorio |
+| HU-03 | Listado con búsqueda, filtros y ordenación con el estado reflejado en la URL; ficha con imágenes, especificaciones, componentes y recursos relacionados; artículos agotados visibles pero no solicitables |
+| HU-04 | Añadir, eliminar y vaciar artículos; máximo 1 unidad por kit y 10 por componente; la selección se conserva al recargar; avisos claros de modo demostración |
+| HU-05 | Formulario accesible con paso de revisión; referencia inequívocamente ficticia; sin enviar datos personales a terceros |
+| HU-07 | Biblioteca con filtros por tipo, tema y dificultad; PDF de demostración señalados; enlaces externos por HTTPS con destino visible |
+| HU-09 | Lectura pública, escritura solo para invitados; marcado de solución; contenido de usuarios mostrado sin ejecutar HTML arbitrario |
+| HU-10 | Catálogo de simulaciones con objetivos y materiales; acceso a CircuitJS1 y Wokwi con alternativa por enlace externo si no se puede incrustar |
+
+### Accesibilidad y diseño
+
+- Navegación completa por teclado, encabezados semánticos y estados de foco visibles.
+- Diseño adaptable (móvil primero) y estados de carga, vacío y error accesibles.
+- Componentes interactivos (menús, diálogos, listas desplegables) con Headless UI para heredar accesibilidad.
+- Prototipos en Figma antes de implementar cada pantalla.
+
+### Seguridad en el cliente
+
+- No guardar secretos en el repositorio ni en variables `VITE_*` (se publican en el bundle).
+- Escapar siempre el contenido de usuarios (preguntas, respuestas); nunca usar `dangerouslySetInnerHTML` con él.
+- Los enlaces externos usan `rel="noopener noreferrer"` y HTTPS.
