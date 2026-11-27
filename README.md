@@ -314,116 +314,127 @@ Los permisos se comprueban **en el backend** (middleware de autorización sobre 
 
 ### Roles
 
-| Rol (documento de requisitos) | Descripción |
-|---|---|
-| Admin | Gestión global de usuarios, roles, permisos, solicitudes y contenidos |
-| Teacher / Docente / Manager | Profesorado invitado: gestiona sus recursos, revisa aportaciones e invita a su alumnado |
-| Customer | Alumnado o usuario invitado: participa en el foro y gestiona sus propias aportaciones |
-| Visitor | Visitante: lectura pública y simulaciones |
+Roles definidos en `seed-roles`:
 
-> Los nombres de los roles varían entre las tablas del documento (`Teacher`, `Docente`, `Manager`). Deben unificarse con los de `seed-roles` (`admin`, `technician`, `moderator`, `user`) antes de asignar permisos en `seed-role-permission`.
+| id | Rol | Descripción |
+|---|---|---|
+| 1 | `ADMIN` | Total access to the platform |
+| 2 | `TEACHER` | Manages students and educational resources |
+| 3 | `CLIENT` | Registered user |
+| 4 | `GUEST` | Unregistered user |
+| 5 | `STUDENT` | Registered user by invitation |
+
+> En el documento de requisitos estos roles aparecen con otros nombres: `Teacher`/`Docente`/`Manager` → `TEACHER`, `Customer` → `CLIENT` y `Visitor` → `GUEST`. `STUDENT` no tiene columna propia en las tablas originales; ver la nota bajo las matrices.
 
 Leyenda: ✅ permitido · ❌ denegado · ✅* permitido **solo sobre lo propio** (ver notas) · — sin definir en el documento.
 
 ### Usuarios y acceso
 
-| Recurso | Operación | Admin | Teacher | Customer | Visitor |
-|---|---|:-:|:-:|:-:|:-:|
-| `User` | create / update / delete | ✅ | ❌ | ❌ | ❌ |
-| `Role` | manage | ✅ | ❌ | ❌ | ❌ |
-| `Permission` | manage | ✅ | ❌ | ❌ | ❌ |
-| `UserRole` | read / create / update / delete | ✅ | ❌ | ❌ | ❌ |
-| `RolePermission` | read / create / update / delete | ✅ | ❌ | ❌ | ❌ |
-| `Invitation` | read | ✅ | ❌ ¹ | ❌ | ❌ |
-| `Invitation` | create | ✅ | ✅* | ❌ | ❌ |
-| `Invitation` | update | ✅ | ❌ | ❌ | ❌ |
-| `Invitation` | delete | ✅ | ✅* | ❌ | ❌ |
-| `Invitation` | createTeacher | ✅ | ❌ | ❌ | ❌ |
-| `Invitation` | createStudent | ✅ | ✅* | ❌ | ❌ |
+| Recurso | Operación | Admin | Teacher | Client | Guest | Student |
+|---|---|:-:|:-:|:-:|:-:|:-:|
+| `User` | create / update / delete | ✅ | ❌ | ❌ | ❌ | ❌ |
+| `Role` | manage | ✅ | ❌ | ❌ | ❌ | ❌ |
+| `Permission` | manage | ✅ | ❌ | ❌ | ❌ | ❌ |
+| `UserRole` | read / create / update / delete | ✅ | ❌ | ❌ | ❌ | ❌ |
+| `RolePermission` | read / create / update / delete | ✅ | ❌ | ❌ | ❌ | ❌ |
+| `Invitation` | read | ✅ | ❌ ¹ | ❌ | ❌ | ❌ |
+| `Invitation` | create | ✅ | ✅* | ❌ | ❌ | ❌ |
+| `Invitation` | update | ✅ | ❌ | ❌ | ❌ | ❌ |
+| `Invitation` | delete | ✅ | ✅* | ❌ | ❌ | ❌ |
+| `Invitation` | createTeacher | ✅ | ❌ | ❌ | ❌ | ❌ |
+| `Invitation` | createStudent | ✅ | ✅* | ❌ | ❌ | ❌ |
 
 ¹ Las tablas del documento no coinciden: la tabla de la Épica 4 (HU-06) deja la lectura solo para administración, mientras que la de la Épica 1 y la de `Sergio` dan lectura también al docente. Aquí se aplica la Épica 4; confirmar con el equipo.
 
 ### Catálogo y stock
 
-| Recurso | Operación | Admin | Teacher | Customer | Visitor |
-|---|---|:-:|:-:|:-:|:-:|
-| `Article` | read | ✅ | ✅ | ✅ | ✅ |
-| `Article` | create | ✅ | ✅ | ✅ | ❌ |
-| `Article` | update / delete | ✅ | ✅ | ❌ | ❌ |
-| `ArticleImage` | read | ✅ | ✅ | ✅ | ✅ |
-| `ArticleImage` | create / update / delete | ✅ | ❌ | ❌ | ❌ |
-| `KitComponent` | read | ✅ | ✅ | ✅ | ✅ |
-| `KitComponent` | create / update | ✅ | ✅ | ❌ | ❌ |
-| `KitComponent` | delete | ✅ | ❌ | ❌ | ❌ |
-| `ArticleCategory` | read | ✅ | ✅ | ✅ | — |
-| `ArticleCategory` | create / update / delete | ✅ | ✅* | ❌ | — |
-| `ArticleReview` | read | ✅ | ✅ | ✅ | — |
-| `ArticleReview` | create / update / delete | ✅ | ✅* | ❌ | — |
-| `StockMovement` | read / create / update / delete | ✅ | ❌ | ❌ | ❌ |
+| Recurso | Operación | Admin | Teacher | Client | Guest | Student |
+|---|---|:-:|:-:|:-:|:-:|:-:|
+| `Article` | read | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `Article` | create | ✅ | ✅ | ✅ | ❌ | — |
+| `Article` | update / delete | ✅ | ✅ | ❌ | ❌ | ❌ |
+| `ArticleImage` | read | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `ArticleImage` | create / update / delete | ✅ | ❌ | ❌ | ❌ | ❌ |
+| `KitComponent` | read | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `KitComponent` | create / update | ✅ | ✅ | ❌ | ❌ | ❌ |
+| `KitComponent` | delete | ✅ | ❌ | ❌ | ❌ | ❌ |
+| `ArticleCategory` | read | ✅ | ✅ | ✅ | — | — |
+| `ArticleCategory` | create / update / delete | ✅ | ✅* | ❌ | — | — |
+| `ArticleReview` | read | ✅ | ✅ | ✅ | — | — |
+| `ArticleReview` | create / update / delete | ✅ | ✅* | ❌ | — | — |
+| `StockMovement` | read / create / update / delete | ✅ | ❌ | ❌ | ❌ | ❌ |
 
 ### Solicitudes
 
-| Recurso | Operación | Admin | Teacher | Customer | Visitor |
-|---|---|:-:|:-:|:-:|:-:|
-| `RequestItem` | read / update / delete | ✅ | ✅ | ✅* | — |
-| `RequestItem` | create | ✅ | ✅ | ✅ | — |
+| Recurso | Operación | Admin | Teacher | Client | Guest | Student |
+|---|---|:-:|:-:|:-:|:-:|:-:|
+| `RequestItem` | read / update / delete | ✅ | ✅ | ✅* | — | — |
+| `RequestItem` | create | ✅ | ✅ | ✅ | — | — |
 
 ### Recursos formativos
 
-| Recurso | Operación | Admin | Teacher | Customer | Visitor |
-|---|---|:-:|:-:|:-:|:-:|
-| `Resource` | read | ✅ | ✅ | ✅ | ✅ |
-| `Resource` | create / update | ✅ | ✅* | ❌ | ❌ |
-| `Resource` | delete | ✅ | ❌ | ❌ | ❌ |
-| `Tag` | read / create | ✅ | ✅ | ✅ | — |
-| `Tag` | update / delete | ✅ | ✅ | ✅* | — |
-| `ResourceTag` | read / create | ✅ | ✅ | ✅ | — |
-| `ResourceTag` | update / delete | ✅ | ❌ | ❌ | — |
-| `ArticleResource` | read | ✅ | ✅ | ✅ | — |
-| `ArticleResource` | create | ✅ | ✅ | ❌ | — |
-| `ArticleResource` | update / delete | ✅ | ❌ | ❌ | — |
+| Recurso | Operación | Admin | Teacher | Client | Guest | Student |
+|---|---|:-:|:-:|:-:|:-:|:-:|
+| `Resource` | read | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `Resource` | create / update | ✅ | ✅* | ❌ | ❌ | ❌ |
+| `Resource` | delete | ✅ | ❌ | ❌ | ❌ | ❌ |
+| `Tag` | read / create | ✅ | ✅ | ✅ | — | — |
+| `Tag` | update / delete | ✅ | ✅ | ✅* | — | — |
+| `ResourceTag` | read / create | ✅ | ✅ | ✅ | — | — |
+| `ResourceTag` | update / delete | ✅ | ❌ | ❌ | — | — |
+| `ArticleResource` | read | ✅ | ✅ | ✅ | — | — |
+| `ArticleResource` | create | ✅ | ✅ | ❌ | — | — |
+| `ArticleResource` | update / delete | ✅ | ❌ | ❌ | — | — |
 
 ### Simulaciones
 
-| Recurso | Operación | Admin | Teacher | Customer | Visitor |
-|---|---|:-:|:-:|:-:|:-:|
-| `Simulation` | read / create / delete | ✅ | ✅ | ✅ | ✅ |
-| `Simulation` | payment (confirmar solicitud ficticia) | ✅ | ✅ | ✅ | ✅ |
-| `SimulationArticle` | read | ✅ | ✅ | ✅ | — |
-| `SimulationArticle` | create | ✅ | ✅ | ❌ | — |
-| `SimulationArticle` | update / delete | ✅ | ❌ | ❌ | — |
-| `SimulationResource` | read | ✅ | ✅ | ✅ | — |
-| `SimulationResource` | create / update / delete | ✅ | ✅* | ❌ | — |
+| Recurso | Operación | Admin | Teacher | Client | Guest | Student |
+|---|---|:-:|:-:|:-:|:-:|:-:|
+| `Simulation` | read / create / delete | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `Simulation` | payment (confirmar solicitud ficticia) | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `SimulationArticle` | read | ✅ | ✅ | ✅ | — | — |
+| `SimulationArticle` | create | ✅ | ✅ | ❌ | — | — |
+| `SimulationArticle` | update / delete | ✅ | ❌ | ❌ | — | — |
+| `SimulationResource` | read | ✅ | ✅ | ✅ | — | — |
+| `SimulationResource` | create / update / delete | ✅ | ✅* | ❌ | — | — |
 
 ### Foro y moderación
 
-| Recurso | Operación | Admin | Teacher | Customer | Visitor |
-|---|---|:-:|:-:|:-:|:-:|
-| `Question` | read | ✅ | ✅ | ✅ | ✅ |
-| `Question` | create | ✅ | ✅ | ✅ | ✅ |
-| `Question` | update / delete | ✅ | ✅ | ✅* | ✅* |
-| `Answer` | read | ✅ | ✅ | ✅ | ✅ |
-| `Answer` | create | ✅ | ✅ | ✅ | ✅ |
-| `Answer` | update / delete | ✅ | ✅ | ✅* | ✅* |
-| `Moderation` | read / create / update / delete | ✅ | ❌ | ❌ | ❌ |
+| Recurso | Operación | Admin | Teacher | Client | Guest | Student |
+|---|---|:-:|:-:|:-:|:-:|:-:|
+| `Question` | read | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `Question` | create | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `Question` | update / delete | ✅ | ✅ | ✅* | ✅* | ✅* |
+| `Answer` | read | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `Answer` | create | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `Answer` | update / delete | ✅ | ✅ | ✅* | ✅* | ✅* |
+| `Moderation` | read / create / update / delete | ✅ | ❌ | ❌ | ❌ | ❌ |
 
 ### Auditoría
 
-| Recurso | Operación | Admin | Teacher | Customer | Visitor |
-|---|---|:-:|:-:|:-:|:-:|
-| `AuditLog` | read | ✅ | ❌ | ❌ | ❌ |
-| `AuditLog` | create / update / delete | ❌ | ❌ | ❌ | ❌ |
+| Recurso | Operación | Admin | Teacher | Client | Guest | Student |
+|---|---|:-:|:-:|:-:|:-:|:-:|
+| `AuditLog` | read | ✅ | ❌ | ❌ | ❌ | ❌ |
+| `AuditLog` | create / update / delete | ❌ | ❌ | ❌ | ❌ | ❌ |
 
 > Los registros de auditoría los genera el sistema; nadie los crea, edita ni borra desde la API.
 
 ### Notas sobre las restricciones `*`
 
-- **Invitaciones (docentes):** solo pueden invitar a sus propios alumnos, y solo crear y borrar sus propias invitaciones.
-- **Preguntas y respuestas (customer y visitor):** solo pueden actualizar o borrar sus propios comentarios.
-- **`RequestItem` (customer):** solo puede leer, actualizar y borrar los ítems de sus propias solicitudes.
+- **Invitaciones (docentes):** solo pueden invitar a sus propios alumnos (rol `STUDENT`), y solo crear y borrar sus propias invitaciones.
+- **Preguntas y respuestas (`CLIENT`, `GUEST` y `STUDENT`):** solo pueden actualizar o borrar sus propios comentarios.
+- **`RequestItem` (`CLIENT`):** solo puede leer, actualizar y borrar los ítems de sus propias solicitudes.
 - **`Resource` (docente):** gestiona solo sus propios contenidos; la administración gestiona todos sin alterar la autoría.
-- **`Tag` (customer):** solo puede modificar o borrar las etiquetas que haya creado.
+- **`Tag` (`CLIENT`):** solo puede modificar o borrar las etiquetas que haya creado.
 - **Entidades marcadas con `*` en las tablas de `Haridian`** (`SimulationResource`, `ArticleCategory`, `ArticleReview`): el docente solo modifica o crea lo suyo.
+
+### Columna `STUDENT`
+
+El documento no define permisos propios para `STUDENT`. Se ha rellenado así:
+
+- Si `GUEST` puede hacer la acción (✅ o ✅*), `STUDENT` también, con la misma restricción.
+- Si `ADMIN` es el único con permiso, `STUDENT` queda en ❌.
+- En el resto de casos queda en — hasta definirlo. La HU-11 menciona que el alumnado autorizado crea borradores y los envía a revisión, pero no concreta permisos.
 
 ### Orden de prioridad al construir `seed-role-permission`
 
@@ -459,7 +470,7 @@ Ubicados en `database/seeders/`. Cargan datos de ejemplo con ids fijos y, en Pos
 | Seeder | Tabla | Contenido |
 |---|---|---|
 | `seed-users` | `users` | 4 usuarios: Admin, Laura Técnica, Carlos Moderador, Ana Usuaria (inactiva) |
-| `seed-roles` | `roles` | `admin`, `technician`, `moderator`, `user` |
+| `seed-roles` | `roles` | `ADMIN`, `TEACHER`, `CLIENT`, `GUEST`, `STUDENT` |
 | `seed-permissions` | `permissions` | `users.manage`, `articles.create`, `articles.review`, `stock.manage`, `resources.publish`, `forum.moderate`, `requests.manage` |
 | `seed-requests` | `requests` | Solicitudes de ejemplo |
 | `seed-tags` | `tags` | Etiquetas de ejemplo |
