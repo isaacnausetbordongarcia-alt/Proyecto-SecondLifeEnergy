@@ -597,9 +597,3 @@ frontend/
 - Diseño adaptable (móvil primero) y estados de carga, vacío y error accesibles.
 - Componentes interactivos (menús, diálogos, listas desplegables) con Headless UI para heredar accesibilidad.
 - Prototipos en Figma antes de implementar cada pantalla.
-
-### Seguridad en el cliente
-
-- No guardar secretos en el repositorio ni en variables `VITE_*` (se publican en el bundle).
-- Escapar siempre el contenido de usuarios (preguntas, respuestas); nunca usar `dangerouslySetInnerHTML` con él.
-- Los enlaces externos usan `rel="noopener noreferrer"` y HTTPS.
